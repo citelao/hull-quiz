@@ -24,6 +24,9 @@ definitions:
     type: "string"
     format: "url"
     $ref: "#/definitions/url"
+  datetime:
+    type: "string"
+    format: "datetime"
   auth-provider:
     type: "string"
     enum:
@@ -122,7 +125,7 @@ definitions:
       providers:
         type: "multiselect"
         descripton: "Ordered list of authentication providers."
-        minItems: 0
+        minItems: 1
         maxItems: 3
         uniqueItems: true
         items:
@@ -134,61 +137,16 @@ definitions:
     default:
       - "facebook"
       - "twitter"
-  signup:
-    title: "Signup"
-    type: "object"
-    properties:
-      form:
-        title: "Signup form"
-        description: "Fields displayed in signup form"
-        $ref: "#/definitions/user-form-schema"
-        format: "array"
-        default:
-          - name: "email"
-            type: "string"
-            inputType: "text"
-            title: "Email"
-            required: true
-          - name: "password"
-            type: "string"
-            inputType: "password"
-            title: "Password"
-            required: true
-  profile:
-    title: "Profile"
-    type: "object"
-    properties:
-      enabled:
-        title: "Enabled"
-        type: "boolean"
-        default: false
-      form:
-        title: "Profile form"
-        description: "Fields displayed in profile form"
-        $ref: "#/definitions/user-form-schema"
-        format: "array"
-        default:
-          - name: "address"
-            type: "string"
-            inputType: "text"
-            title: "Address"
-            required: true
-          - name: "city"
-            type: "string"
-            inputType: "text"
-            title: "City"
-            required: true
-          - name: "zipcode"
-            type: "string"
-            inputType: "text"
-            title: "Zipcode"
-            required: true
   appearance:
     $schema: "http://json-schema.org/draft-04/schema#"
     type: "object"
     title: "Appearance"
     description: "Appearance related options for the component"
     properties:
+      stylesheet_url:
+        title: "Custom stylesheet URL"
+        example: "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+        $ref: "#/definitions/url"
       logo_url:
         title: "Logo URL"
         description: "Brand logo displayed in the header. Dimensions should not exceed 150px x 100px."
@@ -229,22 +187,84 @@ definitions:
         $ref: "#/definitions/translations"
         title: "French"
 properties:
-  general:
-    $ref: "#/definitions/general"
-  social:
-    $ref: "#/definitions/social"
-  signup:
-    $ref: "#/definitions/signup"
-  profile:
-    $ref: "#/definitions/profile"
+  quiz:
+    title: "Quiz"
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      description:
+        type: "string"
+      starts_at:
+        $ref: "#/definitions/datetime"
+      ends_at:
+        $ref: "#/definitions/datetime"
+      options:
+        type: "object"
+        properties:
+          highlightAnswers:
+            type: "boolean"
+            default: true
+          autoStart:
+            type: "boolean"
+            default: false
+          autoSubmit:
+            type: "boolean"
+            default: false
+          autoNext:
+            type: "boolean"
+            default: false
+          sampleQuestions:
+            type: "number"
+            default: 0
+          questionTimer:
+            type: "number"
+            default: 0
+          quizTimer:
+            type: "number"
+            default: 0
+      questions:
+        title: "Questions"
+        type: "array"
+        format: "array"
+        items:
+          type: "object"
+          properties:
+            ref:
+              type: "string"
+            name:
+              type: "string"
+            description:
+              type: "string"
+              format: "textarea"
+            picture:
+              $ref: "#/definitions/image-url"
+            answers:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  ref:
+                    type: "string"
+                  name:
+                    type: "string"
+                  description:
+                    type: "string"
+                    format: "textarea"
+                  weight:
+                    format: "number"
+                  picture:
+                    $ref: "#/definitions/image-url"
+                required:
+                  - "ref"
+                  - "name"
+            required:
+              - "ref"
+              - "name"
+    required:
+      - "name"
+      - "questions"
   appearance:
     $ref: "#/definitions/appearance"
   locales:
     $ref: "#/definitions/locales"
-required:
-  - general
-  - social
-  - signup
-  - profile
-  - appearance
-  - locales

@@ -1,0 +1,12 @@
+{{> quiz/header}}
+
+{{#if badge}}
+{{> quiz/result}}
+{{else}}
+<section data-hull-section="intro" class='text-center'>
+  <h3>{{t "Hey, let's play together !"}}</h3>
+  <a class='btn btn-block btn-primary' data-hull-action='start'>{{t "Start !"}}</a>
+</section>
+{{/if}}
+
+{{> quiz/footer}}

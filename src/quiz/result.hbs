@@ -1,0 +1,14 @@
+{{> quiz/header}}
+
+{{#state.badge}}
+<div class="text-center">
+  <h3>Bravo !</h3>
+  <h1>{{score}} points <small class='muted'>after {{stats.attempts}} attempts</small></h1>
+  <p>
+    <a class="btn btn-primary" data-hull-action='replay'>Replay !</a>
+    <a class="btn btn-danger" data-hull-action='replay' data-hull-reset='true'>Reset !</a>
+  </p>
+</div>
+{{/state.badge}}
+
+{{> quiz/footer}}
