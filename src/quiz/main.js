@@ -1,10 +1,11 @@
 Hull.component({
-
-  templates: ['intro', 'question', 'finished', 'result', 'header', 'footer', 'styles'],
+  templates: ['intro', 'question', 'finished', 'result', 'profile-form', 'header', 'footer', 'styles'],
 
   require: ['i18n'],
 
   refreshEvents: ['model.hull.me.change'],
+
+  topLevelFields: ['email', 'picture', 'name', 'login', 'password'],
 
   defaultOptions: {
     sampleQuestions: false,
@@ -24,6 +25,20 @@ Hull.component({
       if (this.options.id) {
         return this.api(this.options.id, { fields: 'badge' });
       }
+    }
+  },
+
+
+  events: {
+    'submit form[data-action="profile"]': function(e) {
+      e.preventDefault();
+      var self = this;
+      var formData = this.sandbox.dom.getFormData(e.target);
+      this.updateCurrentUser(formData).then(function() {
+        self.renderSection('profile');
+      }, function(err) {
+        alert(err.message);
+      });
     }
   },
 
@@ -69,6 +84,69 @@ Hull.component({
     t: function(key, opts) {
       return I18n.t(key, opts);
     }
+  },
+
+  updateCurrentUser: function(attributes) {
+    var topLevelFields = this.topLevelFields;
+
+    function isTopLevelField(k) {
+      return topLevelFields.indexOf(k) > -1;
+    }
+
+    var self = this,
+      _ = this.sandbox.util._;
+    if (this.loggedIn()) {
+      var user = {
+        extra: {}
+      };
+      _.map(attributes, function(v, k) {
+        if (isTopLevelField(k)) {
+          user[k] = v;
+        } else {
+          user.extra[k] = v;
+        }
+      });
+      this.disableForm();
+      var dfd = this.api.put('me', user);
+      dfd.then(function() {
+        self.enableForm();
+      }, function() {
+        self.enableForm();
+      })
+      return dfd;
+    } else {
+      return false;
+    }
+  },
+
+  disableForm: function() {
+    this.$('form fieldset').attr('disabled', true);
+  },
+
+  enableForm: function() {
+    this.$('form fieldset').attr('disabled', false);
+  },
+
+  getForm: function(formName, user) {
+    var self = this,
+      _ = this.sandbox.util._;
+    if (!this.ship[formName] || !this.ship[formName].form) {
+      return {};
+    };
+    if (user) {
+      var form = _.map(this.ship[formName].form, function(field) {
+        var f = _.clone(field);
+        var k = f.name;
+        f.id = _.uniqueId('profile-form-field-');
+        if (user[k]) {
+          f.value = user[k];
+        } else if (user.extra && user.extra[k]) {
+          f.value = user.extra[k];
+        }
+        return f;
+      });
+    }
+    return form;
   },
 
   initialize: function() {
@@ -160,7 +238,7 @@ Hull.component({
         linked: loggedIn && loggedIn[provider]
       };
     });
-
+    data.profileFormFields = this.getForm('profile', data.me);
   },
 
   getOption: function (key) {

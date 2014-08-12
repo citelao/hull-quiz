@@ -26,7 +26,7 @@ definitions:
     $ref: "#/definitions/url"
   datetime:
     type: "string"
-    format: "datetime"
+    format: "datetime-local"
   auth-provider:
     type: "string"
     enum:
@@ -118,11 +118,13 @@ definitions:
     type: "object"
     properties:
       enabled:
+        title: "Enabled"
         type: "boolean"
         description: "Enables or disables display of social login buttons."
         default: true
         example: true
       providers:
+        title: "Providers"
         type: "multiselect"
         descripton: "Ordered list of authentication providers."
         minItems: 1
@@ -137,6 +139,33 @@ definitions:
     default:
       - "facebook"
       - "twitter"
+  profile:
+    title: "Profile Form"
+    type: "object"
+    properties:
+      enabled:
+        title: "Enabled"
+        type: "boolean"
+        default: false
+      form:
+        title: "Profile form"
+        description: "Fields displayed in profile form"
+        $ref: "#/definitions/user-form-schema"
+        format: "array"
+        default:
+          - name: "name"
+            type: "string"
+            title: "Name"
+            required: true
+          - name: "email"
+            type: "string"
+            format: "email"
+            title: "Email"
+            required: true
+          - name: "country"
+            type: "string"
+            title: "Country"
+            required: true
   appearance:
     $schema: "http://json-schema.org/draft-04/schema#"
     type: "object"
@@ -237,17 +266,17 @@ properties:
             title: "Sample Questions"
             description: "Only display a number of questions picked randomly"
             type: "number"
-            default: 0
+            format: "number"
           questionTimer:
             title: "Question timer"
             description: "Maximum time to answer a question"
             type: "number"
-            default: 0
+            format: "number"
           quizTimer:
             title: "Quiz timer"
             description: "Maximum time to answer all questions"
             type: "number"
-            default: 0
+            format: "number"
       questions:
         title: "Questions"
         type: "array"
@@ -300,8 +329,8 @@ properties:
     required:
       - "name"
       - "questions"
-  appearance:
-    $ref: "#/definitions/appearance"
+  profile:
+    $ref: "#/definitions/profile"
   social:
     title: "Social login"
     description: "Enable Social login and configure providers"
@@ -309,6 +338,7 @@ properties:
     properties:
       enabled:
         type: "boolean"
+        title: "Enabled"
         description: "Enables or disables display of social login buttons."
         default: true
         example: true
@@ -327,5 +357,7 @@ properties:
     default:
       - "facebook"
       - "twitter"
+  appearance:
+    $ref: "#/definitions/appearance"
   locales:
     $ref: "#/definitions/locales"

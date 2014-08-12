@@ -1,4 +1,7 @@
 <hr>
 <footer>
-<p  class="text-center">{{t "Here is a great footer"}}</p>
+<p class="text-center">{{t "Here is a great footer"}}</p>
+{{#if loggedIn}}
+<p class="text-center"><a class="btn btn-link" data-hull-action="logout">{{t "Logout"}}</a></p>
+{{/if}}
 </footer>

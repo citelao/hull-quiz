@@ -15,7 +15,13 @@ Hull.component({
     displaySection: function(event, action) {
       this.$('[role="tablist"] li').removeClass('active');
       this.editSection(action.data.section);
-    }
+    },
+    saveTheShip: function() {
+      alert("Not implemented yet !");
+    },
+    exit: function() {
+      alert("Not implemented yet !");
+    },
   },
 
   createEditor: function(schema, startval, el) {
@@ -27,7 +33,8 @@ Hull.component({
       iconlib: this.options.iconlib || 'hullstrap',
       no_additional_properties: true,
       disable_edit_json: true,
-      disable_properties: true
+      disable_properties: true,
+      disable_collapse: true
     });
   },
 

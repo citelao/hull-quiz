@@ -1,0 +1,14 @@
+<form class="profile-form" data-action="profile">
+  <fieldset>
+  {{#each profileFormFields}}
+  <div class="form-group">
+    <label for="{{id}}">{{title}}</label>
+    <input id="{{id}}" type="{{format}}" name="{{name}}" class="form-control" placeholder="{{title}}" value="{{value}}" {{#if required}}required{{/if}}>
+  </div>
+  {{/each}}
+
+  <button class="btn btn-block btn-primary" type="submit">
+    {{t "Save my profile"}}
+  </button>
+  </fieldset>
+</form>
