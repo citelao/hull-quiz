@@ -1,17 +1,27 @@
-<div data-hull-question="{{ref}}" class="row">
-  <div class="col-md-6">
-    {{> quiz/header}}
+{{> quiz/header}}
+
+<div class="row">
+  <div class="col-md-12">
     {{#question}}
     <h3>{{name}}</h3>
     <p>{{description}}</p>
+    {{/question}}
+  </div>
+</div>
+
+<div data-hull-question="{{ref}}" class="row">
+  {{#question}}
+  <div class="col-md-6">
+    {{#if picture}}
+    <img src="{{picture}}" />
+    {{/if}}
+  </div>
+  <div class="col-md-6">
     <ul class="nav nav-pills nav-stacked">
       {{#answers}}
       <li data-hull-action="answer" data-hull-answer-ref="{{ref}}" data-hull-question-ref="{{../ref}}">
         <a href="#">
-          <h4>
-            {{#if weight}}<span class='muted pull-right'>{{weight}}</span>{{/if}}
-            {{name}}
-          </h4>
+          <h4>{{name}}</h4>
           <p>{{description}}</p>
         </a>
       </li>
@@ -19,20 +29,20 @@
     </ul>
     {{/question}}
   </div>
-  <div class="col-md-6">
-    {{#if question.picture}}
-    <img src="{{question.picture}}" />
-    {{/if}}
-  </div>
 </div>
 
-<div class='well text-center'>
+<div class='text-center'>
   {{#if state.options.questionTimer}}
   <span data-hull-question-ticker class='badge badge-important'>{{state.timer.countdowns.question}}</span>
+  {{/if}}
+  {{#if state.options.quizTimer}}
   <span data-hull-quiz-ticker class='badge badge-important'>{{state.timer.countdowns.quiz}}</span>
-  {{else}}
+  {{/if}}
+  {{#if state.options.displayPagination}}
   <ul class="pager">
-    <li><a href="#" data-hull-action="previous" class="btn {{#unless question.pagination.previous}}disabled{{/unless}}">{{t "Previous"}}</a></li>
+    <li>
+      <a href="#" data-hull-action="previous" class="btn {{#unless question.pagination.previous}}disabled{{/unless}}">{{t "Previous"}}</a>
+    </li>
     {{#if question.pagination.next}}
     <li><a href="#" data-hull-action="next" class='btn next-step disabled'>{{t "Next"}}</a></li>
     {{else}}
@@ -41,6 +51,5 @@
   </ul>
   {{/if}}
 </div>
-
 
 {{> quiz/footer}}

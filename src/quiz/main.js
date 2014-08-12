@@ -8,10 +8,10 @@ Hull.component({
 
   defaultOptions: {
     sampleQuestions: false,
-    highlightAnswers: true,
     autoStart: false,
     autoSubmit: false,
     autoNext: false,
+    shuffleAnswers: true,
     questionTimer: 0,
     quizTimer: 0
   },
@@ -53,7 +53,15 @@ Hull.component({
     },
 
     start: function(event, action) {
-      this.startQuiz();
+      if (this.loggedIn()) {
+        this.startQuiz();
+      } else if (action.data.provider) {
+        var self = this;
+        this.sandbox.login(action.data.provider).then(function() {
+          self.startQuiz.call(self);
+        });
+      }
+
     }
   },
 
@@ -71,8 +79,8 @@ Hull.component({
         if (this.state) {
           this.state.options = this.getOptions();
           this.initTimer();
+          this.renderSection(this.currentSection);
         }
-        this.renderSection(this.currentSection);
       }, this);
     }
     this.$el.attr('id', this.cid);
@@ -88,6 +96,9 @@ Hull.component({
 
   getTemplate: function(tpl) {
     var _ = this.sandbox.util._;
+    if (!this.loggedIn()) {
+      return 'intro';
+    }
     if (!this.state.playing) {
       if (this.state.badge) {
         return 'result';
@@ -130,6 +141,9 @@ Hull.component({
   // Rendering
 
   beforeRender: function(data) {
+    var _ = this.sandbox.util._;
+
+    I18n.translations = data.ship.locales;
     data.styleNamespace = "#" + this.cid;
     this.ship = data.ship;
     this.quiz = data.quiz = data.quiz || data.ship.quiz;
@@ -137,6 +151,16 @@ Hull.component({
     if (!this.state) this.initState();
     data.state = this.state;
     data.question = this.getCurrentQuestion();
+
+    var authServices = _.intersection(this.authServices(), data.ship.social.providers);
+    data.authServices = {};
+    var loggedIn = this.loggedIn();
+    _.map(authServices, function(provider) {
+      data.authServices[provider] = {
+        linked: loggedIn && loggedIn[provider]
+      };
+    });
+
   },
 
   getOption: function (key) {
@@ -147,7 +171,7 @@ Hull.component({
   // Questions
 
   getQuestions: function() {
-    var _ = this.sandbox.util._;
+    var _ = this.sandbox.util._, self = this;
     var questions = (this.quiz.questions || []).slice(0);
     if (this.getOption('sampleQuestions') > 0) {
       questions = _.sample(questions, this.getOption('sampleQuestions'));
@@ -155,6 +179,9 @@ Hull.component({
     var questionsCount = questions.length
     return _.map(questions, function(q, i) {
       var index = i + 1
+      if (self.getOption('shuffleAnswers')) {
+        q.answers = _.shuffle(q.answers);
+      }
       return _.extend(q, { pagination: {
         index: index,
         total: questions.length,
@@ -304,7 +331,7 @@ Hull.component({
   selectPreviousQuestion: function() {
     var q = this.getPreviousQuestion();
     if (q) {
-      this.currentQuestionIndex -= 1;
+      this.state.currentQuestionIndex -= 1;
       this.resetQuestionCountdown();
       this.renderSection('question');
     }

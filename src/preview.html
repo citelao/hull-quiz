@@ -5,8 +5,12 @@
   <link href="./quiz/vex-theme-plain.css" rel="stylesheet">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="./quiz/vex.combined.min.js"></script>
-  <script src="./quiz/ractive.js"></script>
   <script src="{{config.init.jsUrl}}/{{config.version}}/hull.js"></script>
+  <style>
+    body {
+      background-color: transparent !important;
+    }
+  </style>
   <script>
     vex.defaultOptions.className = 'vex-theme-plain';
     Hull.init({{{initConfig}}});
@@ -56,6 +60,6 @@
   </style>
 </head>
 <body>
-  <div data-hull-component="quiz" data-hull-edit-mode="true" style="width: 810px; margin: 10px auto;"></div>
+  <div data-hull-component="quiz" data-hull-edit-mode="true" style="width: 550px; margin: 10px auto;"></div>
 </body>
 </html>

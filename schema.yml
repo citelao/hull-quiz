@@ -192,35 +192,60 @@ properties:
     type: "object"
     properties:
       name:
+        title: "Name"
         type: "string"
       description:
+        title: "Description"
         type: "string"
+        format: "textarea"
       starts_at:
+        title: "Starts At"
         $ref: "#/definitions/datetime"
       ends_at:
+        title: "Ends At"
         $ref: "#/definitions/datetime"
       options:
+        title: "Options"
         type: "object"
         properties:
-          highlightAnswers:
-            type: "boolean"
-            default: true
           autoStart:
+            title: "Auto Start"
+            description: "Automatically start the quiz when it's loaded"
             type: "boolean"
             default: false
           autoSubmit:
+            title: "Auto submit"
+            description: "Automatically submit the answers when the last question is answered"
             type: "boolean"
             default: false
           autoNext:
+            title: "Auto next"
+            description: "Go to next question automatically"
             type: "boolean"
             default: false
+          displayPagination:
+            title: "Display pagination"
+            description: "Display pagination buttons"
+            type: "boolean"
+            default: true
+          shuffleAnswers:
+            title: "Shuffle answers"
+            description: "Shuffle the order of display for answers"
+            type: "boolean"
+            default: true
           sampleQuestions:
+            title: "Sample Questions"
+            description: "Only display a number of questions picked randomly"
             type: "number"
             default: 0
           questionTimer:
+            title: "Question timer"
+            description: "Maximum time to answer a question"
             type: "number"
             default: 0
           quizTimer:
+            title: "Quiz timer"
+            description: "Maximum time to answer all questions"
             type: "number"
             default: 0
       questions:
@@ -231,28 +256,39 @@ properties:
           type: "object"
           properties:
             ref:
+              title: "Reference"
+              description: "Unique reference for this question"
               type: "string"
             name:
+              title: "Display name"
               type: "string"
             description:
+              title: "Description"
               type: "string"
               format: "textarea"
             picture:
               $ref: "#/definitions/image-url"
             answers:
+              title: "Answers"
               type: "array"
               items:
                 type: "object"
                 properties:
                   ref:
+                    title: "Reference"
+                    description: "Unique reference for this answer"
                     type: "string"
                   name:
+                    title: "Display name"
                     type: "string"
                   description:
                     type: "string"
                     format: "textarea"
                   weight:
-                    format: "number"
+                    title: "Points"
+                    description: "Number of points attributed to this answer"
+                    type: "number"
+                    default: 0
                   picture:
                     $ref: "#/definitions/image-url"
                 required:
@@ -266,5 +302,30 @@ properties:
       - "questions"
   appearance:
     $ref: "#/definitions/appearance"
+  social:
+    title: "Social login"
+    description: "Enable Social login and configure providers"
+    type: "object"
+    properties:
+      enabled:
+        type: "boolean"
+        description: "Enables or disables display of social login buttons."
+        default: true
+        example: true
+      providers:
+        type: "multiselect"
+        descripton: "Ordered list of authentication providers."
+        minItems: 0
+        maxItems: 3
+        uniqueItems: true
+        items:
+          title: "Auth Service"
+          $ref: "#/definitions/auth-provider"
+    required:
+      - "enabled"
+      - "providers"
+    default:
+      - "facebook"
+      - "twitter"
   locales:
     $ref: "#/definitions/locales"

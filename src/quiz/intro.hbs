@@ -4,8 +4,18 @@
 {{> quiz/result}}
 {{else}}
 <section data-hull-section="intro" class='text-center'>
-  <h3>{{t "Hey, let's play together !"}}</h3>
-  <a class='btn btn-block btn-primary' data-hull-action='start'>{{t "Start !"}}</a>
+  <h3>{{t "Hey, let's play together"}}</h3>
+  {{#if loggedIn}}
+    <button class='btn btn-block btn-primary' data-hull-action='start'>{{t "Start"}}</button>
+  {{else}}
+  <div class="social-login">
+    {{#each authServices}}
+    <button data-hull-action="start" data-hull-provider="{{@key}}" class="btn btn-block social-btn social-btn-{{@key}}">
+      {{t "Log in with"}} {{humanize @key}}
+    </button>
+    {{/each}}
+  </div>
+  {{/if}}
 </section>
 {{/if}}
 
