@@ -56,10 +56,15 @@ Hull.component({
     var errors = this.editor.validate();
     if (errors.length == 0) {
       this.ship[sectionName] = this.editor.getValue();
-      this.sandbox.emit('ship.update', this.ship);
+      this.updatePreview();
     } else {
       console.error('Validation Errors', errors);
     }
+  },
+
+  updatePreview: function() {
+    var previewFrame = document.getElementById(this.previewId);
+    previewFrame && previewFrame.contentWindow.postMessage({ event: 'ship.update', ship: this.ship }, '*');
   },
 
   beforeRender: function(data) {
@@ -74,6 +79,7 @@ Hull.component({
         }, editor.expandRefs(prop))
       }
     });
+    this.previewId = data.previewId = _.uniqueId('ship-preview-');
   },
 
   afterRender: function(data) {
