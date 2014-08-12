@@ -1,6 +1,6 @@
 {{> quiz/header}}
 
-<div class="row">
+<div class="row text-center">
   <div class="col-md-12">
     {{#question}}
     <h3>{{name}}</h3>
@@ -9,11 +9,11 @@
   </div>
 </div>
 
-<div data-hull-question="{{ref}}" class="row">
+<div data-hull-question="{{ref}}" class="row text-center">
   {{#question}}
   <div class="col-md-6">
     {{#if picture}}
-    <img src="{{picture}}" />
+    <img src="{{picture}}" width="100%" />
     {{/if}}
   </div>
   <div class="col-md-6">
