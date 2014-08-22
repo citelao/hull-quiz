@@ -80,6 +80,7 @@ Hull.component({
       }
     });
     this.previewId = data.previewId = _.uniqueId('ship-preview-');
+    data.previewUrl = "./preview.html?appId=" + this.ship.id + "&orgUrl" = encodeURIComponent("http://" + this.options.namespace + ".hullapp.dev");
   },
 
   afterRender: function(data) {

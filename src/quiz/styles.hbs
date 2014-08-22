@@ -1,10 +1,10 @@
-{{#if ship.appearance.stylesheet_url}}
-<link rel="stylesheet" href="{{ship.appearance.stylesheet_url}}">
+{{#if ship.config.appearance.stylesheet_url}}
+<link rel="stylesheet" href="{{ship.config.appearance.stylesheet_url}}">
 {{/if}}
 
 <style>
 {{styleNamespace}} {
-  background-color: #ffffff;
+  background-color: {{ship.config.appearance.main_color}};
   padding: 20px;
 }
 

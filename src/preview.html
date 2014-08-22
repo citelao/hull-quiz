@@ -48,6 +48,7 @@
       var message = e.data;
       if (message && message.event === 'ship.update') {
         Hull.ready(function() {
+          console.warn("Ship update : ", message);
           Hull.emit('ship.update', message.ship);
         });
       }
@@ -60,6 +61,6 @@
   </style>
 </head>
 <body>
-  <div data-hull-component="quiz" data-hull-edit-mode="true" style="width: 550px; margin: 10px auto;"></div>
+  <div data-hull-component="quiz" data-hull-ship-id="{{config.shipId}}" data-hull-edit-mode="true" style="width: 550px; margin: 10px auto;"></div>
 </body>
 </html>

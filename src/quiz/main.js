@@ -19,11 +19,14 @@ Hull.component({
 
   datasources: {
     ship: function() {
-      return this.ship || $.getJSON('./ship.json');
-    },
-    quiz: function() {
-      if (this.options.id) {
-        return this.api(this.options.id, { fields: 'badge' });
+      if (this.ship) {
+        return this.ship;
+      } else {
+        if (this.options.shipId) {
+          return this.api(this.options.shipId);
+        } else {
+          return this.api(this.sandbox.config.appId);
+        }
       }
     }
   },
@@ -129,12 +132,13 @@ Hull.component({
 
   getForm: function(formName, user) {
     var self = this,
-      _ = this.sandbox.util._;
-    if (!this.ship[formName] || !this.ship[formName].form) {
+      _ = this.sandbox.util._,
+      formConfig = this.ship.config[formName];
+    if (!formConfig || !formConfig.form) {
       return {};
     };
     if (user) {
-      var form = _.map(this.ship[formName].form, function(field) {
+      var form = _.map(formConfig.form, function(field) {
         var f = _.clone(field);
         var k = f.name;
         f.id = _.uniqueId('profile-form-field-');
@@ -153,7 +157,7 @@ Hull.component({
     var _ = this.sandbox.util._;
     if (this.options.editMode) {
       this.sandbox.on('ship.update', function(ship) {
-        this.ship = ship;
+        this.ship.config = ship.config;
         if (this.state) {
           this.state.options = this.getOptions();
           this.initTimer();
@@ -167,6 +171,7 @@ Hull.component({
   },
 
   renderSection: function(section, data) {
+    console.warn("Rendering section", section, data);
     var _ = this.sandbox.util._;
     this.currentSection = section || this.currentSection || this.getTemplate();
     this.render(this.currentSection, data);
@@ -213,24 +218,24 @@ Hull.component({
 
   getOptions: function() {
     var _ = this.sandbox.util._;
-    return _.extend({}, this.defaultOptions, this.ship.quiz.options || {}, this.ship.options || {}, _.pick(this.options, _.keys(this.defaultOptions)));
+    var shipConfig = this.ship.config || {};
+    return _.extend({}, this.defaultOptions, (shipConfig.quiz && shipConfig.quiz.options) || {}, shipConfig.options || {}, _.pick(this.options, _.keys(this.defaultOptions)));
   },
 
   // Rendering
 
   beforeRender: function(data) {
-    var _ = this.sandbox.util._;
-
-    I18n.translations = data.ship.locales;
+    var _ = this.sandbox.util._, shipConfig = data.ship.config || {};
+    I18n.translations = data.ship.config.locales || {};
     data.styleNamespace = "#" + this.cid;
     this.ship = data.ship;
-    this.quiz = data.quiz = data.quiz || data.ship.quiz;
+    this.quiz = data.quiz = data.quiz || data.ship.config.quiz || {};
     data._renderCount = this._renderCount;
     if (!this.state) this.initState();
     data.state = this.state;
     data.question = this.getCurrentQuestion();
-
-    var authServices = _.intersection(this.authServices(), data.ship.social.providers);
+    var socialProviders = (shipConfig.social && shipConfig.social.providers) || [];
+    var authServices = _.intersection(this.authServices(), socialProviders);
     data.authServices = {};
     var loggedIn = this.loggedIn();
     _.map(authServices, function(provider) {
@@ -270,7 +275,7 @@ Hull.component({
   },
 
   getQuestion: function(idx) {
-    return this.state.questions[idx];
+    return this.state.questions && this.state.questions[idx];
   },
 
   getCurrentQuestion: function() {
@@ -301,7 +306,7 @@ Hull.component({
     this.stopTicker();
     var $submitBtn = this.$find('[data-hull-action="submit"]');
     var timing = timer.finishedAt - timer.startedAt;
-    if (this.id) {
+    if (this.quiz_id) {
       $submitBtn.attr('disabled', true);
       this.api(this.id + "/achieve", 'post', { answers: this.answers, timing: timing }, function(badge) {
         $submitBtn.attr('disabled', false);
@@ -318,9 +323,9 @@ Hull.component({
 
   computeScore: function() {
     var _ = this.sandbox.util._, answers = this.state.answers;
-    if (this.ship.quiz) {
+    if (this.ship.config.quiz) {
       var result = { score: 0, stats: { attempts: 1 }, data: { answers: answers } };
-      _.map(this.ship.quiz.questions, function(q) {
+      _.map(this.ship.config.quiz.questions, function(q) {
         var answer, answerRef = answers[q.ref];
         if (answerRef) {
           answer = _.find(q.answers, function(a) { return a.ref === answerRef; });
