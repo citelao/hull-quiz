@@ -32,21 +32,19 @@
 </div>
 
 <div class='text-center'>
-  {{#if state.options.questionTimer}}
+  {{#if state.options.question_timer}}
   <span data-hull-question-ticker class='badge badge-important'>{{state.timer.countdowns.question}}</span>
   {{/if}}
-  {{#if state.options.quizTimer}}
+  {{#if state.options.quiz_timer}}
   <span data-hull-quiz-ticker class='badge badge-important'>{{state.timer.countdowns.quiz}}</span>
   {{/if}}
-  {{#if state.options.displayPagination}}
+  {{#if state.options.display_pagination}}
   <ul class="pager">
     <li>
       <a href="#" data-hull-action="previous" class="btn {{#unless question.pagination.previous}}disabled{{/unless}}">{{t "Previous"}}</a>
     </li>
     {{#if question.pagination.next}}
     <li><a href="#" data-hull-action="next" class='btn next-step disabled'>{{t "Next"}}</a></li>
-    {{else}}
-    <li><a href="#" data-hull-action="submit" class='btn next-step disabled'>{{t "Finish"}}</a></li>
     {{/if}}
   </ul>
   {{/if}}

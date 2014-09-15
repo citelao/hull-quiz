@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 
     watch: {
       components: {
-        files: ['src/**/**', 'config.yml', 'schema.yml'],
+        files: ['src/**/**', 'config.yml', 'manifest.yml'],
         tasks: ['hull_components']
       }
     },
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
     connect: {
       server: {
         options: {
-          port: 8000,
+          port: 8033,
           base: 'dist/'
         }
       }

@@ -8,27 +8,16 @@ Hull.component({
   topLevelFields: ['email', 'picture', 'name', 'login', 'password'],
 
   defaultOptions: {
-    sampleQuestions: false,
-    autoStart: false,
-    autoSubmit: false,
-    autoNext: false,
-    shuffleAnswers: true,
-    questionTimer: 0,
-    quizTimer: 0
+    sample_questions: false,
+    auto_start: false,
+    auto_submit: false,
+    auto_next: false,
+    shuffle_answers: true,
+    question_timer: 0,
+    quiz_timer: 0
   },
 
   datasources: {
-    ship: function() {
-      if (this.ship) {
-        return this.ship;
-      } else {
-        if (this.options.shipId) {
-          return this.api(this.options.shipId);
-        } else {
-          return this.api(this.sandbox.config.appId);
-        }
-      }
-    }
   },
 
 
@@ -155,16 +144,11 @@ Hull.component({
 
   initialize: function() {
     var _ = this.sandbox.util._;
-    if (this.options.editMode) {
-      this.sandbox.on('ship.update', function(ship) {
-        this.ship.config = ship.config;
-        if (this.state) {
-          this.state.options = this.getOptions();
-          this.initTimer();
-          this.renderSection(this.currentSection);
-        }
-      }, this);
-    }
+    this.sandbox.on('ship.update', function(ship) {
+      this.sandbox.ship.update(ship);
+      this.initTimer()
+      this.renderSection(this.currentSection);
+    }, this);
     this.$el.attr('id', this.cid);
     I18n.fallbacks = true;
     I18n.locale = this.options.locale || navigator.language;
@@ -210,7 +194,7 @@ Hull.component({
 
   initTimer: function() {
     this.state.timer = {
-      countdowns: { question: this.getOption('questionTimer'), quiz: this.getOption('quizTimer') },
+      countdowns: { question: this.getOption('question_timer'), quiz: this.getOption('quiz_timer') },
       timings: {},
       startedAt: new Date()
     };
@@ -218,24 +202,21 @@ Hull.component({
 
   getOptions: function() {
     var _ = this.sandbox.util._;
-    var shipConfig = this.ship.config || {};
-    return _.extend({}, this.defaultOptions, (shipConfig.quiz && shipConfig.quiz.options) || {}, shipConfig.options || {}, _.pick(this.options, _.keys(this.defaultOptions)));
+    var shipConfig = this.sandbox.ship.settings() || {};
+    return _.extend({}, this.defaultOptions, shipConfig);
   },
 
   // Rendering
 
   beforeRender: function(data) {
-    var _ = this.sandbox.util._, shipConfig = data.ship.config || {};
-    I18n.translations = data.ship.config.locales || {};
+    var _ = this.sandbox.util._, shipConfig = this.sandbox.ship.settings() || {};
+    I18n.translations = this.sandbox.ship.translations();
     data.styleNamespace = "#" + this.cid;
-    this.ship = data.ship;
-    this.quiz = data.quiz = data.quiz || data.ship.config.quiz || {};
-    data._renderCount = this._renderCount;
+    this.quiz = this.sandbox.ship.resource('quiz');
     if (!this.state) this.initState();
     data.state = this.state;
     data.question = this.getCurrentQuestion();
-    var socialProviders = (shipConfig.social && shipConfig.social.providers) || [];
-    var authServices = _.intersection(this.authServices(), socialProviders);
+    var authServices = this.authServices();
     data.authServices = {};
     var loggedIn = this.loggedIn();
     _.map(authServices, function(provider) {
@@ -243,7 +224,7 @@ Hull.component({
         linked: loggedIn && loggedIn[provider]
       };
     });
-    data.profileFormFields = this.getForm('profile', data.me);
+    // data.profileFormFields = this.getForm('profile', data.me);
   },
 
   getOption: function (key) {
@@ -256,13 +237,13 @@ Hull.component({
   getQuestions: function() {
     var _ = this.sandbox.util._, self = this;
     var questions = (this.quiz.questions || []).slice(0);
-    if (this.getOption('sampleQuestions') > 0) {
-      questions = _.sample(questions, this.getOption('sampleQuestions'));
+    if (this.getOption('sample_questions') > 0) {
+      questions = _.sample(questions, this.getOption('sample_questions'));
     }
     var questionsCount = questions.length
-    return _.map(questions, function(q, i) {
+    var questions = _.map(questions, function(q, i) {
       var index = i + 1
-      if (self.getOption('shuffleAnswers')) {
+      if (self.getOption('shuffle_answers')) {
         q.answers = _.shuffle(q.answers);
       }
       return _.extend(q, { pagination: {
@@ -272,6 +253,7 @@ Hull.component({
         previous: (index > 1)
       } });
     });
+    return questions;
   },
 
   getQuestion: function(idx) {
@@ -306,35 +288,14 @@ Hull.component({
     this.stopTicker();
     var $submitBtn = this.$find('[data-hull-action="submit"]');
     var timing = timer.finishedAt - timer.startedAt;
-    if (this.quiz_id) {
+    if (this.quiz && this.quiz.id) {
       $submitBtn.attr('disabled', true);
-      this.api(this.id + "/achieve", 'post', { answers: this.answers, timing: timing }, function(badge) {
+      this.api(this.quiz.id + "/achieve", 'post', { answers: this.state.answers || [], timing: timing }, function(badge) {
         $submitBtn.attr('disabled', false);
         self.state.playing = false;
         self.state.badge = badge;
         self.renderSection('result');
       });
-    } else {
-      this.state.playing = false;
-      this.state.badge = this.computeScore();
-      this.renderSection('result');
-    }
-  },
-
-  computeScore: function() {
-    var _ = this.sandbox.util._, answers = this.state.answers;
-    if (this.ship.config.quiz) {
-      var result = { score: 0, stats: { attempts: 1 }, data: { answers: answers } };
-      _.map(this.ship.config.quiz.questions, function(q) {
-        var answer, answerRef = answers[q.ref];
-        if (answerRef) {
-          answer = _.find(q.answers, function(a) { return a.ref === answerRef; });
-          if (answer) {
-            result.score += (answer.weight || 0);
-          }
-        }
-      });
-      return result;
     }
   },
 
@@ -357,17 +318,17 @@ Hull.component({
     var timer = this.state.timer;
 
     // Global Timer
-    if (this.getOption('quizTimer')) {
+    if (this.getOption('quiz_timer')) {
       if (timer.countdowns.quiz > 0) {
         timer.countdowns.quiz -= 1;
-        this.onQuizTick(timer.countdowns.quiz, this.getOption('quizTimer'));
+        this.onQuizTick(timer.countdowns.quiz, this.getOption('quiz_timer'));
       } else if (timer.countdowns.quiz === 0) {
         this.finishQuiz();
       }
     }
 
     // Question Timer
-    if (this.getOption('questionTimer')) {
+    if (this.getOption('question_timer')) {
       if (timer.countdowns.question > 0) {
         timer.countdowns.question -= 1;
         this.onQuestionTick(timer.countdowns.question);
@@ -378,9 +339,9 @@ Hull.component({
   },
 
   resetQuestionCountdown: function() {
-    if (this.getOption('questionTimer')) {
-      this.state.timer.countdowns.question = this.getOption('questionTimer');
-      this.onQuestionTick(this.getOption('questionTimer'));
+    if (this.getOption('question_timer')) {
+      this.state.timer.countdowns.question = this.getOption('question_timer');
+      this.onQuestionTick(this.getOption('question_timer'));
     }
   },
 
@@ -402,7 +363,7 @@ Hull.component({
       this.renderSection('question');
     } else {
       this.state.playing = false;
-      if (this.getOption('autoSubmit')) {
+      if (this.getOption('auto_submit')) {
         this.finishQuiz();
       } else {
         this.renderSection('finished');
@@ -423,7 +384,7 @@ Hull.component({
   selectAnswer: function(qRef, aRef) {
     this.state.answers[qRef] = aRef;
     this.$('.next-step').removeClass('disabled');
-    if (this.getOption('autoNext')) {
+    if (this.getOption('auto_next')) {
       this.selectNextQuestion();
     }
   }

@@ -1,18 +1,41 @@
 <html>
-  <head>
-    <title>Hull Components - {{options.sourceName}} - version: {{options.version}}</title>
-    <link href="//hls3.s3.amazonaws.com/stylesheets/dashboard.css" rel="stylesheet" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://ricostacruz.com/jquery.transit/jquery.transit.js?v=14845"></script>
-    <script src="{{config.init.jsUrl}}/{{config.version}}/hull.js"></script>
-    <script>
-      Hull.init({{{initConfig}}});
-    </script>
-    <script src="//use.typekit.net/jyf4qww.js" type="text/javascript"></script><script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  </head>
-  <body>
-    <div class="offcanvas-container" data-hull-component="ship-admin@admin" data-hull-ship-url="{{config.shipUrl}}" />
-    </div>
-  </body>
+<head>
+  <title>Hull Components - {{options.sourceName}} - version: {{options.version}}</title>
+  <link href="//hls3.s3.amazonaws.com/stylesheets/dashboard.css" rel="stylesheet">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{{config.init.jsUrl}}/{{config.version}}/hull.js"></script>
+  <script>
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+          results = regex.exec(location.search);
+      return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var DefaultConfig = {{{initConfig}}};
+
+    var HullConfig = {
+      orgUrl: getParameterByName('orgUrl')  || DefaultConfig.orgUrl,
+      appId: getParameterByName('appId')  || DefaultConfig.appId,
+      jsUrl: "http://js.hull.dev/dist",
+      sources: {
+        default: document.location.origin
+      }
+    };
+
+    console.warn("HullConfig", HullConfig);
+    Hull.init(HullConfig, function() {
+      window.addEventListener('message', function(e) {
+        var message = e.data;
+        if (message && message.event === 'ship.update') {
+          Hull.emit('ship.update', message.ship);
+        }
+      }, false);
+    });
+
+  </script>
+</head>
+<body>
+  <div data-hull-component="quiz"></div>
+</body>
 </html>

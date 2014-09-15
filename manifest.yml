@@ -1,0 +1,55 @@
+name: "quiz"
+version: "0.0.1"
+description: "A Wonderful quiz for your users"
+preview_url: "http://login.ship.dev/preview.png"
+logo_url: "http://quiz.ship.dev/logo.png"
+homepage: "http://quiz.ship.dev/index.html"
+settings:
+  - name: "auto_start"
+    title: "Auto Start"
+    description: "Automatically start the quiz when it's loaded"
+    type: "boolean"
+    default: false
+  - name: "auto_submit"
+    title: "Auto submit"
+    description: "Automatically submit the answers when the last question is answered"
+    type: "boolean"
+    default: false
+  - name: "auto_next"
+    title: "Auto next"
+    description: "Go to next question automatically"
+    type: "boolean"
+    default: false
+  - name: "display_pagination"
+    title: "Display pagination"
+    description: "Display pagination buttons"
+    type: "boolean"
+    default: true
+  - name: "shuffle_answers"
+    title: "Shuffle answers"
+    description: "Shuffle the order of display for answers"
+    type: "boolean"
+    default: true
+  - name: "sample_questions"
+    title: "Sample Questions"
+    description: "Only display a number of questions picked randomly"
+    type: "number"
+    format: "number"
+    default: 0
+  - name: "question_timer"
+    title: "Question timer"
+    description: "Maximum time to answer a question"
+    type: "number"
+    format: "number"
+    default: 0
+  - name: "quiz_timer"
+    title: "Quiz timer"
+    description: "Maximum time to answer all questions"
+    type: "number"
+    format: "number"
+    default: 0
+resources:
+  - name: "quiz"
+    type: "quiz"
+locales:
+  - en
