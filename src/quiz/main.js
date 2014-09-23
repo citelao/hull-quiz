@@ -5,8 +5,6 @@ Hull.component({
 
   refreshEvents: ['model.hull.me.change'],
 
-  topLevelFields: ['email', 'picture', 'name', 'login', 'password'],
-
   defaultOptions: {
     sample_questions: false,
     auto_start: false,
@@ -17,22 +15,78 @@ Hull.component({
     quiz_timer: 0
   },
 
-  datasources: {
-  },
-
 
   events: {
     'submit form[data-action="profile"]': function(e) {
       e.preventDefault();
+      var _ = this.sandbox.util._;
       var self = this;
+      var formResource = this.profileForm;
       var formData = this.sandbox.dom.getFormData(e.target);
-      this.updateCurrentUser(formData).then(function() {
-        self.renderSection('profile');
+      this.disableForm();
+      var data = {};
+      _.map(formResource.fields_list, function(field) {
+        var val = formData[field.name];
+        if (field.type === 'number') {
+          val = parseFloat(val);
+        } else if (field.type === 'integer') {
+          val = parseInt(val, 10);
+        }
+        data[field.name] = val;
+      });
+      var ret = this.api.put(formResource.id + "/submit", { data: data });
+      ret.then(function(response) {
+        self.profileForm.user_data = response.data;
+        self.renderSection('result');
       }, function(err) {
-        alert(err.message);
+        self.enableForm();
+        self.alertMessage(err.message);
       });
     }
   },
+
+  alertMessage: function(msg) {
+    var $alert = this.$('.alert-message');
+    if (msg) {
+      $alert.html(msg);
+      $alert.show();
+    } else {
+      $alert.hide();
+    }
+  },
+
+  getFormFields: function() {
+    var _ = this.sandbox.util._;
+    var form = this.profileForm;
+    var fields = {};
+    if (!form || !form.fields_list) return fields;
+    var user_data = form.user_data || {};
+    var user = Hull.currentUser() || { extra: {}, profile: {} };
+    _.map(form.fields_list, function(field) {
+      var val = user_data[field.name];
+      var inputType;
+      if (field.type === 'string') {
+        inputType = field.format || 'text';
+      } else {
+        // inputType = field.type;
+        inputType = 'text';
+      }
+      if (!val) {
+        if (field.scope === 'app') {
+          val = user.profile[field.name];
+        } else {
+          val = user[field.name] || user.extra[field.name];
+        }
+      }
+      fields[field.name] = _.extend({}, field, {
+        value: val,
+        inputType: inputType
+      });
+    });
+    return fields;
+  },
+
+
 
   actions: {
 
@@ -78,39 +132,6 @@ Hull.component({
     }
   },
 
-  updateCurrentUser: function(attributes) {
-    var topLevelFields = this.topLevelFields;
-
-    function isTopLevelField(k) {
-      return topLevelFields.indexOf(k) > -1;
-    }
-
-    var self = this,
-      _ = this.sandbox.util._;
-    if (this.loggedIn()) {
-      var user = {
-        extra: {}
-      };
-      _.map(attributes, function(v, k) {
-        if (isTopLevelField(k)) {
-          user[k] = v;
-        } else {
-          user.extra[k] = v;
-        }
-      });
-      this.disableForm();
-      var dfd = this.api.put('me', user);
-      dfd.then(function() {
-        self.enableForm();
-      }, function() {
-        self.enableForm();
-      })
-      return dfd;
-    } else {
-      return false;
-    }
-  },
-
   disableForm: function() {
     this.$('form fieldset').attr('disabled', true);
   },
@@ -150,6 +171,7 @@ Hull.component({
       this.renderSection(this.currentSection);
     }, this);
     this.$el.attr('id', this.cid);
+    this.profileForm = $.extend(true, {}, this.sandbox.ship.resource('profile-form'));
     I18n.fallbacks = true;
     I18n.locale = this.options.locale || navigator.language;
   },
@@ -223,7 +245,7 @@ Hull.component({
         linked: loggedIn && loggedIn[provider]
       };
     });
-    // data.profileFormFields = this.getForm('profile', data.me);
+    data.profileFormFields = this.getFormFields();
   },
 
   getOption: function (key) {
