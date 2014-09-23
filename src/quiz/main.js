@@ -155,7 +155,6 @@ Hull.component({
   },
 
   renderSection: function(section, data) {
-    console.warn("Rendering section", section, data);
     var _ = this.sandbox.util._;
     this.currentSection = section || this.currentSection || this.getTemplate();
     this.render(this.currentSection, data);
@@ -249,7 +248,7 @@ Hull.component({
       return _.extend(q, { pagination: {
         index: index,
         total: questions.length,
-        next: (index < questionsCount),
+        next: (index < (questionsCount + 1)),
         previous: (index > 1)
       } });
     });
