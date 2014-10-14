@@ -13,7 +13,8 @@ module.exports = function(grunt) {
       options: {
         sourceName: pkg.hull.componentSourceName,
         config: config,
-        optimize: !grunt.option('dev')
+        optimize: !grunt.option('dev'),
+        componentsDir: 'aura_components'
       },
       src: {
         src: 'src',
