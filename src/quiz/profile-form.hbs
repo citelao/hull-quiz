@@ -3,7 +3,8 @@
   <ul class="list-group">
     {{#each profileFormFields}}
     <li class="list-group-item">
-      <input type="{{inputType}}" name="{{name}}" class="form-control" placeholder="{{title}}" value="{{value}}" {{#if required}}required{{/if}}>
+      <label for="{{id}}">{{title}}</label>
+      <input id="{{id}}" type="{{inputType}}" name="{{name}}" class="form-control" placeholder="{{title}}" value="{{value}}" {{#if required}}required{{/if}}>
     </li>
     {{/each}}
   </ul>

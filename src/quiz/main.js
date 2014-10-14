@@ -15,6 +15,11 @@ Hull.component({
     quiz_timer: 0
   },
 
+  datasources: {
+    ship: function() {
+      return this.api.model('app');
+    }
+  },
 
   events: {
     'submit form[data-action="profile"]': function(e) {
@@ -79,6 +84,7 @@ Hull.component({
         }
       }
       fields[field.name] = _.extend({}, field, {
+        id: _.uniqueId('form-field-'),
         value: val,
         inputType: inputType
       });
@@ -166,12 +172,13 @@ Hull.component({
   initialize: function() {
     var _ = this.sandbox.util._;
     this.sandbox.on('ship.update', function(ship) {
-      this.sandbox.ship.update(ship);
-      this.initTimer()
+      console.warn("Ship.update: ", ship);
+      this.ship = ship;
+      this.initState();
+      this.initTimer();
       this.renderSection(this.currentSection);
     }, this);
     this.$el.attr('id', this.cid);
-    this.profileForm = $.extend(true, {}, this.sandbox.ship.resource('profile-form'));
     I18n.fallbacks = true;
     I18n.locale = this.options.locale || navigator.language;
   },
@@ -202,6 +209,7 @@ Hull.component({
 
   initState: function() {
     var _ = this.sandbox.util._;
+    I18n.translations = this.ship.translations;
     this.state = {
       options: this.getOptions(),
       playing: false,
@@ -223,17 +231,19 @@ Hull.component({
 
   getOptions: function() {
     var _ = this.sandbox.util._;
-    var shipConfig = this.sandbox.ship.settings() || {};
+    var shipConfig = this.ship.settings || {};
     return _.extend({}, this.defaultOptions, shipConfig);
   },
 
   // Rendering
 
   beforeRender: function(data) {
-    var _ = this.sandbox.util._, shipConfig = this.sandbox.ship.settings() || {};
-    I18n.translations = this.sandbox.ship.translations();
+    this.ship = data.ship;
+    this.profileForm = $.extend(true, {}, this.ship.resources['profile-form']);
+    shipConfig = this.ship.settings;
+    var _ = this.sandbox.util._;
     data.styleNamespace = "#" + this.cid;
-    this.quiz = this.sandbox.ship.resource('quiz');
+    this.quiz = data.ship.resources.quiz;
     if (!this.state) this.initState();
     data.state = this.state;
     data.question = this.getCurrentQuestion();

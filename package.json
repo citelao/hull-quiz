@@ -1,7 +1,7 @@
 {
-  "name": "hull-login",
+  "name": "hull-quiz",
   "hull": {
-    "componentSourceName": "login"
+    "componentSourceName": "quiz"
   },
   "version": "0.1.0",
   "repository": "https://github.com/hull-components/login.git",

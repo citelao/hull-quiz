@@ -17,7 +17,8 @@
     var HullConfig = {
       orgUrl: getParameterByName('orgUrl')  || DefaultConfig.orgUrl,
       appId: getParameterByName('appId')  || DefaultConfig.appId,
-      jsUrl: "http://js.hull.dev/dist",
+      debug: true,
+      jsUrl: "{{config.init.jsUrl}}",
       sources: {
         default: document.location.origin
       }
