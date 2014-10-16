@@ -1,5 +1,5 @@
 Hull.component({
-  templates: ['intro', 'question', 'finished', 'result', 'profile-form', 'header', 'footer', 'styles'],
+  templates: ['intro', 'question', 'result', 'profile-form', 'header', 'footer', 'styles'],
 
   require: ['i18n'],
 
@@ -8,7 +8,6 @@ Hull.component({
   defaultOptions: {
     sample_questions: false,
     auto_start: false,
-    auto_submit: false,
     auto_next: false,
     shuffle_answers: true,
     question_timer: 0,
@@ -98,10 +97,6 @@ Hull.component({
       var aRef = action.data.answerRef.toString();
 
       this.selectAnswer(qRef, aRef);
-    },
-
-    submit: function(event, action) {
-      this.finishQuiz();
     },
 
     next: function() {
@@ -315,12 +310,9 @@ Hull.component({
   finishQuiz: function() {
     var self = this, timer = this.state.timer;
     this.stopTicker();
-    var $submitBtn = this.$find('[data-hull-action="submit"]');
     var timing = timer.finishedAt - timer.startedAt;
     if (this.quiz && this.quiz.id) {
-      $submitBtn.attr('disabled', true);
       this.api(this.quiz.id + "/achieve", 'post', { answers: this.state.answers || [], timing: timing }, function(badge) {
-        $submitBtn.attr('disabled', false);
         self.state.playing = false;
         self.state.badge = badge;
         self.renderSection('result');
@@ -390,12 +382,7 @@ Hull.component({
       this.renderSection('question');
     } else {
       this.state.playing = false;
-      if (this.getOption('auto_submit') {
-        this.finishQuiz();
-      } else {
-        this.renderSection('finished');
-        this.stopTicker();
-      }
+      this.finishQuiz();
     }
   },
 
