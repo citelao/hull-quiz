@@ -92,13 +92,11 @@ Hull.component({
     return fields;
   },
 
-
-
   actions: {
-
     answer: function(event, action) {
-      var qRef = action.data.questionRef.toString(),
-          aRef = action.data.answerRef.toString();
+      var qRef = action.data.questionRef.toString();
+      var aRef = action.data.answerRef.toString();
+
       this.selectAnswer(qRef, aRef);
     },
 
@@ -243,7 +241,7 @@ Hull.component({
     shipConfig = this.ship.settings;
     var _ = this.sandbox.util._;
     data.styleNamespace = "#" + this.cid;
-    this.quiz = data.ship.resources.quiz;
+    data.quiz = this.quiz = data.ship.resources.quiz;
     if (!this.state) this.initState();
     data.state = this.state;
     data.question = this.getCurrentQuestion();
@@ -330,7 +328,6 @@ Hull.component({
     }
   },
 
-
   // Timers
   startTicker: function() {
     this.ticker = setInterval(this.onTick.bind(this), 1000);
@@ -343,9 +340,8 @@ Hull.component({
   },
 
   onTick: function() {
-    if (this.sandbox.stopped) {
-      return this.stopTicker();
-    }
+    if (this.sandbox.stopped) { return this.stopTicker(); }
+
     var timer = this.state.timer;
 
     // Global Timer
@@ -394,7 +390,7 @@ Hull.component({
       this.renderSection('question');
     } else {
       this.state.playing = false;
-      if (this.getOption('auto_submit')) {
+      if (this.getOption('auto_submit') {
         this.finishQuiz();
       } else {
         this.renderSection('finished');
@@ -414,10 +410,8 @@ Hull.component({
 
   selectAnswer: function(qRef, aRef) {
     this.state.answers[qRef] = aRef;
-    this.$('.next-step').removeClass('disabled');
-    if (this.getOption('auto_next')) {
-      this.selectNextQuestion();
-    }
-  }
 
+    this.$('.next-step').removeClass('disabled');
+    this.selectNextQuestion();
+  }
 });

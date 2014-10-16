@@ -1,6 +1,10 @@
 {{> quiz/styles}}
 
-<header class='text-center'>
-  <h1>{{quiz.name}}</h1>
-  <p>{{quiz.description}}</p>
+<header class="header">
+  {{#if true}}
+    <img class="logo" src="https://fanart.tv/fanart/movies/59859/hdmovielogo/kick-ass-2-5145fbd794020.png" alt="{{quiz.name}}">
+  {{else}}
+    <h1>{{quiz.name}}</h1>
+  {{/if}}
 </header>
+

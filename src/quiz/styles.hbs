@@ -1,38 +1,37 @@
 {{#if ship.config.appearance.stylesheet_url}}
-<link rel="stylesheet" href="{{ship.config.appearance.stylesheet_url}}">
+  <link rel="stylesheet" href="{{ship.config.appearance.stylesheet_url}}">
 {{/if}}
 
 <style>
+
+body {
+  background-color: #000;
+}
+
+.main {
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,1) 100%);
+}
+
+.main::after {
+  content: "";
+  background: url(http://multiversitystatic.s3.amazonaws.com/uploads/2013/08/kickassandhitgirl.jpg);
+  background-position: center;
+  background-size: cover;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
 {{styleNamespace}} {
-  background-color: {{ship.config.appearance.main_color}};
-  padding: 20px;
-}
-
-/*--------------------
-  social-login
-*/
-
-{{styleNamespace}} .social-login > div {
-  margin: 10px 0;
-}
-
-{{styleNamespace}} .social-login button {
-  color: #ffffff;
-}
-
-{{styleNamespace}} .social-login button.social-btn-facebook {
-  background-color: #3B5998;
-}
-
-{{styleNamespace}} .social-login button.social-btn-github {
-  background-color: #222222;
-}
-
-{{styleNamespace}} .social-login button.social-btn-twitter {
-  background-color: #4099FF;
 }
 
 </style>
-
-
-

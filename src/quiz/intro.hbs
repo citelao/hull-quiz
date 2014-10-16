@@ -1,22 +1,24 @@
 {{> quiz/header}}
 
 {{#if badge}}
-{{> quiz/result}}
+  {{> quiz/result}}
 {{else}}
-<section data-hull-section="intro" class='text-center'>
-  <h3>{{t "Hey, let's play together"}}</h3>
-  {{#if loggedIn}}
-    <button class='btn btn-block btn-primary' data-hull-action='start'>{{t "Start"}}</button>
-  {{else}}
-  <div class="social-login">
-    {{#each authServices}}
-    <button data-hull-action="start" data-hull-provider="{{@key}}" class="btn btn-block social-btn social-btn-{{@key}}">
-      {{t "Log in with"}} {{humanize @key}}
-    </button>
-    {{/each}}
-  </div>
-  {{/if}}
-</section>
+  <section data-hull-section="intro" class="experience experience-intro">
+    <h1>{{t "Hey, let's play together"}}</h1>
+    <p>{{t "some extra information"}}</p>
+
+    {{#if loggedIn}}
+      <button class='btn btn-block btn-primary' data-hull-action='start'>{{t "Start"}}</button>
+    {{else}}
+      <div class="social-login">
+        {{#each authServices}}
+          <button data-hull-action="start" data-hull-provider="{{@key}}" class="btn btn-block social-btn social-btn-{{@key}}">
+            {{t "Login and play with"}} {{humanize @key}}
+          </button>
+        {{/each}}
+      </div>
+    {{/if}}
+  </section>
 {{/if}}
 
 {{> quiz/footer}}
