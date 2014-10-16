@@ -10,16 +10,6 @@ settings:
     description: "Automatically start the quiz when it's loaded"
     type: "boolean"
     default: false
-  - name: "auto_submit"
-    title: "Auto submit"
-    description: "Automatically submit the answers when the last question is answered"
-    type: "boolean"
-    default: false
-  - name: "auto_next"
-    title: "Auto next"
-    description: "Go to next question automatically"
-    type: "boolean"
-    default: false
   - name: "display_pagination"
     title: "Display pagination"
     description: "Display pagination buttons"
