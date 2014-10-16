@@ -1,5 +1,5 @@
 Hull.component({
-  templates: ['intro', 'question', 'result', 'profile-form', 'header', 'footer', 'styles'],
+  templates: ['intro', 'question', 'result', 'profile-form', 'header', 'footer', 'styles', 'thanks'],
 
   require: ['i18n'],
 
@@ -41,7 +41,8 @@ Hull.component({
       var ret = this.api.put(formResource.id + "/submit", { data: data });
       ret.then(function(response) {
         self.profileForm.user_data = response.data;
-        self.renderSection('result');
+        console.log('ALORS', self.profileForm);
+        self.renderSection('thanks');
       }, function(err) {
         self.enableForm();
         self.alertMessage(err.message);
@@ -184,19 +185,15 @@ Hull.component({
 
   getTemplate: function(tpl) {
     var _ = this.sandbox.util._;
-    if (!this.loggedIn()) {
-      return 'intro';
-    }
-    if (!this.state.playing) {
-      if (this.state.badge) {
-        return 'result';
-      } else if (_.values(this.state.answers).length > 0) {
-        return 'finished';
-      } else {
-        return 'intro';
-      }
+
+    if (!this.loggedIn()) { return 'intro'; }
+
+    if (this.state.playing) { return 'question'; }
+
+    if (this.state.badge) {
+      return tpl;
     } else {
-      return 'question';
+      return 'intro';
     }
   },
 

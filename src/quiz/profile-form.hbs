@@ -1,16 +1,14 @@
 <form class="profile-form" data-action="profile">
-  <fieldset>
-  <ul class="list-group">
+  <div class="fields">
     {{#each profileFormFields}}
-    <li class="list-group-item">
-      <label for="{{id}}">{{title}}</label>
-      <input id="{{id}}" type="{{inputType}}" name="{{name}}" class="form-control" placeholder="{{title}}" value="{{value}}" {{#if required}}required{{/if}}>
-    </li>
+      <div class="field">
+        <label for="{{id}}">{{title}}</label>
+        <input id="{{id}}" type="{{inputType}}" name="{{name}}" class="form-control" placeholder="{{title}}" value="{{value}}" {{#if required}}required{{/if}}>
+      </div>
     {{/each}}
-  </ul>
+  </div>
 
   <button class="btn btn-block btn-primary" type="submit">
     {{t "Save my profile"}}
   </button>
-  </fieldset>
 </form>

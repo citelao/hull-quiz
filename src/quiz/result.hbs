@@ -1,18 +1,18 @@
 {{> quiz/header}}
 
-{{#state.badge}}
-<div class="text-center">
-  <h3>{{t "Bravo"}}</h3>
-  <h1>{{score}} {{t "points"}} <small class='muted'>{{t "after"}} {{stats.attempts}} {{t "attempts"}}</small></h1>
-  <p>
-    <a class="btn btn-primary" data-hull-action='replay'>{{t "Replay"}}</a>
-    <a class="btn btn-danger" data-hull-action='replay' data-hull-reset='true'>{{t "Reset"}}</a>
-  </p>
-</div>
-{{/state.badge}}
+<div class="experience experience-result">
+  {{#state.badge}}
+    <h1>{{t "Bravo"}}</h1>
+    <p>
+      {{score}} {{t "points"}} {{t "after"}} {{stats.attempts}} {{t "attempts"}}
+      <a href="#" data-hull-action='replay'>{{t "Replay"}}</a> or
+      complete your profile.
+    </p>
+  {{/state.badge}}
 
-{{#if profileFormFields}}
-{{> quiz/profile-form}}
-{{/if}}
+  {{#if profileFormFields}}
+    {{> quiz/profile-form}}
+  {{/if}}
+</div>
 
 {{> quiz/footer}}
