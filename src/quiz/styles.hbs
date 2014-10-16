@@ -12,9 +12,13 @@ body {
   background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,1) 100%);
 }
 
+.btn-primary {
+  background-color: {{state.options.main_color}}
+}
+
 .main::after {
   content: "";
-  background: url(http://multiversitystatic.s3.amazonaws.com/uploads/2013/08/kickassandhitgirl.jpg);
+  background: url({{state.options.background_image}});
   background-position: center;
   background-size: cover;
   opacity: 0.5;

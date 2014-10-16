@@ -41,7 +41,6 @@ Hull.component({
       var ret = this.api.put(formResource.id + "/submit", { data: data });
       ret.then(function(response) {
         self.profileForm.user_data = response.data;
-        console.log('ALORS', self.profileForm);
         self.renderSection('thanks');
       }, function(err) {
         self.enableForm();
