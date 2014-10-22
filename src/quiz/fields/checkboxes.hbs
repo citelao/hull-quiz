@@ -1,0 +1,19 @@
+{{#each field_options.options}}
+<div>
+  <label class='fb-option'>
+    <input type='checkbox' name="{{../name}}[]" value="{{label}}" {{#if selected}}checked{{/if}} {{#if required}}data-parsley-maxcheck="1"{{/if}} />
+    {{label}}
+  </label>
+</div>
+{{/each}}
+
+{{#if field_options.include_other_option}}
+<div class='other-option'>
+  <label class='fb-option'>
+    <input type='checkbox' name="{{name}}[]" value="other" {{#if other_value}}checked{{/if}} />
+    Other
+  </label>
+
+  <input type='text' name="{{name}}_other_value" value="{{other_value}}" />
+</div>
+{{/if}}

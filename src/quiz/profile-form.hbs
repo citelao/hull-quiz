@@ -1,14 +1,18 @@
+{{> quiz/header}}
+
 <form class="profile-form" data-action="profile">
   <div class="fields">
     {{#each profileFormFields}}
-      <div class="field">
-        <label for="{{id}}">{{title}}</label>
-        <input id="{{id}}" type="{{inputType}}" name="{{name}}" class="form-control" placeholder="{{title}}" value="{{value}}" {{#if required}}required{{/if}}>
+      <div class="field {{field_type}}">
+        <label for="profile-form-field-{{name}}">{{title}}</label>
+        {{{formField .}}}
       </div>
     {{/each}}
   </div>
 
-  <button class="btn btn-block btn-primary" type="submit">
+  <button class="button" type="submit">
     {{t "Save my profile"}}
   </button>
 </form>
+
+{{> quiz/footer}}

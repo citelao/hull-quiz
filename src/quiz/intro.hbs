@@ -3,21 +3,23 @@
 {{#if badge}}
   {{> quiz/result}}
 {{else}}
-  <section data-hull-section="intro" class="experience experience-intro">
-    <h1>{{t "intro_title"}}</h1>
-    <p>{{t "intro_description"}}</p>
+  <section data-hull-section="intro" class="row experience experience-intro">
+    <div class="large-12 columns">
+      <h1>{{t "intro_title"}}</h1>
+      <p>{{t "intro_description"}}</p>
 
-    {{#if loggedIn}}
-      <button class='btn btn-block btn-primary' data-hull-action='start'>{{t "Start"}}</button>
-    {{else}}
-      <div class="social-login">
-        {{#each authServices}}
-          <button data-hull-action="start" data-hull-provider="{{@key}}" class="btn btn-block social-btn social-btn-{{@key}}">
-            {{t "Login and play with"}} {{humanize @key}}
-          </button>
-        {{/each}}
-      </div>
-    {{/if}}
+      {{#if loggedIn}}
+        <a class="button" role="button" data-hull-action="start">{{t "Start"}}</a>
+      {{else}}
+        <div class="social-login">
+          {{#each authServices}}
+            <a role="button" data-hull-action="start" data-hull-provider="{{@key}}" class="button social-btn social-btn-{{@key}}">
+              {{t "Login and play with"}} {{humanize @key}}
+            </a>
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
   </section>
 {{/if}}
 

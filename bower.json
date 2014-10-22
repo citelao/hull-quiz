@@ -19,5 +19,8 @@
     "test",
     "tests",
     "docs"
-  ]
+  ],
+  "dependencies": {
+    "parsleyjs": "~2.0.5"
+  }
 }

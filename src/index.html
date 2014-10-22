@@ -1,18 +1,11 @@
 <html>
 <head>
   <title>Hull Components - {{options.sourceName}} - version: {{options.version}}</title>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/css/normalize.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/css/foundation.min.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="{{config.init.jsUrl}}/{{config.version}}/hull.js"></script>
   <script>
-    function getParameterByName(name) {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-          results = regex.exec(location.search);
-      return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-
-    var DefaultConfig = {{{initConfig}}};
-
     var HullConfig = {
       orgUrl: getParameterByName('orgUrl')  || DefaultConfig.orgUrl,
       appId: getParameterByName('appId')  || DefaultConfig.appId,
@@ -23,7 +16,6 @@
       }
     };
 
-    console.warn("HullConfig", HullConfig);
     Hull.init(HullConfig, function() {
       window.addEventListener('message', function(e) {
         var message = e.data;
@@ -119,21 +111,6 @@
       margin-bottom: 20px;
     }
 
-    .btn {
-      display: inline-block;
-      margin: 0;
-      padding: 30px 25px;
-      border: 0;
-      border-radius: 5px;
-      background: #fff;
-      color: #fff;
-      vertical-align: bottom;
-      font-weight: bold;
-      line-height: 0;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
     .experience {
       -webkit-animation: fade .5s ease;
     }
@@ -156,6 +133,10 @@
       text-decoration: none;
       border-radius: 5px;
       transition: all ease 0.2s;
+    }
+
+    .answer a {
+      text-decoration: none;
     }
 
     .answer:hover,
@@ -185,34 +166,6 @@
       border-radius: 5px;
       color: #aaa;
       text-align: left;
-    }
-
-    .field + .field {
-      margin-top: 10px;
-    }
-
-    .field label {
-      background: #FAFAFA;
-      display: block;
-      font-size: 9px;
-      text-transform: uppercase;
-      border: 1px solid #ddd;
-      border-bottom: 0;
-      line-height: 1;
-      padding: 4px 8px;
-      letter-spacing: 1px;
-      border-top-right-radius: 5px;
-      border-top-left-radius: 5px;
-    }
-
-    .field input {
-      padding: 8px;
-      font-size: 14px;
-      line-height: 1;
-      border: 1px solid #ddd;
-      width: 100%;
-      border-bottom-right-radius: 5px;
-      border-bottom-left-radius: 5px;
     }
 
     @-webkit-keyframes fade {

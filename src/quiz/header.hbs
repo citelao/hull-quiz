@@ -1,10 +1,8 @@
 {{> quiz/styles}}
 
-<header class="header">
-  {{#if true}}
+<div class="header">
+  {{#if state.options.logo_image}}
     <img class="logo" src="{{state.options.logo_image}}" alt="{{quiz.name}}">
-  {{else}}
-    <h1>{{quiz.name}}</h1>
   {{/if}}
-</header>
+</div>
 

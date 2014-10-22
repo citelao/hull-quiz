@@ -1,9 +1,27 @@
 Hull.component({
-  templates: ['intro', 'question', 'result', 'profile-form', 'header', 'footer', 'styles', 'thanks'],
-
-  require: ['i18n'],
+  templates: [
+    'intro',
+    'question',
+    'result',
+    'profile-form',
+    'header',
+    'footer',
+    'styles',
+    'thanks',
+    'fields/text',
+    'fields/date',
+    'fields/number',
+    'fields/dropdown',
+    'fields/paragraph',
+    'fields/radio',
+    'fields/checkboxes',
+    'fields/website',
+    'fields/email'
+  ],
 
   refreshEvents: ['model.hull.me.change'],
+
+  require: ['i18n', 'parsley'],
 
   defaultOptions: {
     sample_questions: false,
@@ -28,19 +46,10 @@ Hull.component({
       var formResource = this.profileForm;
       var formData = this.sandbox.dom.getFormData(e.target);
       this.disableForm();
-      var data = {};
-      _.map(formResource.fields_list, function(field) {
-        var val = formData[field.name];
-        if (field.type === 'number') {
-          val = parseFloat(val);
-        } else if (field.type === 'integer') {
-          val = parseInt(val, 10);
-        }
-        data[field.name] = val;
-      });
-      var ret = this.api.put(formResource.id + "/submit", { data: data });
-      ret.then(function(response) {
-        self.profileForm.user_data = response.data;
+      var ret = this.api.put(formResource.id + "/submit", { data: formData });
+      ret.then(function(form) {
+        self.ship.resources['profile-form'] = form;
+        self.profileForm = form;
         self.renderSection('thanks');
       }, function(err) {
         self.enableForm();
@@ -59,39 +68,16 @@ Hull.component({
     }
   },
 
-  getFormFields: function() {
-    var _ = this.sandbox.util._;
-    var form = this.profileForm;
-    var fields = {};
-    if (!form || !form.fields_list) return fields;
-    var user_data = form.user_data || {};
-    var user = Hull.currentUser() || { extra: {}, profile: {} };
-    _.map(form.fields_list, function(field) {
-      var val = user_data[field.name];
-      var inputType;
-      if (field.type === 'string') {
-        inputType = field.format || 'text';
-      } else {
-        // inputType = field.type;
-        inputType = 'text';
-      }
-      if (!val) {
-        if (field.scope === 'app') {
-          val = user.profile[field.name];
-        } else {
-          val = user[field.name] || user.extra[field.name];
-        }
-      }
-      fields[field.name] = _.extend({}, field, {
-        id: _.uniqueId('form-field-'),
-        value: val,
-        inputType: inputType
-      });
-    });
-    return fields;
-  },
-
   actions: {
+
+    share: function(event, action) {
+      event && event.preventDefault()
+      var provider = action.data.provider;
+      if (provider) {
+        Hull.share({ provider: provider, params: { href: document.location.toString() } });
+      }
+    },
+
     answer: function(event, action) {
       var qRef = action.data.questionRef.toString();
       var aRef = action.data.answerRef.toString();
@@ -121,11 +107,15 @@ Hull.component({
           self.startQuiz.call(self);
         });
       }
-
     }
   },
 
   helpers: {
+    formField: function(field) {
+      var tpl = "fields/" + field.field_type;
+      return this.renderTemplate(tpl, field);
+    },
+
     t: function(key, opts) {
       return I18n.t(key, opts);
     }
@@ -139,41 +129,20 @@ Hull.component({
     this.$('form fieldset').attr('disabled', false);
   },
 
-  getForm: function(formName, user) {
-    var self = this,
-      _ = this.sandbox.util._,
-      formConfig = this.ship.config[formName];
-    if (!formConfig || !formConfig.form) {
-      return {};
-    };
-    if (user) {
-      var form = _.map(formConfig.form, function(field) {
-        var f = _.clone(field);
-        var k = f.name;
-        f.id = _.uniqueId('profile-form-field-');
-        if (user[k]) {
-          f.value = user[k];
-        } else if (user.extra && user.extra[k]) {
-          f.value = user.extra[k];
-        }
-        return f;
-      });
-    }
-    return form;
-  },
-
   initialize: function() {
+    this.injectLinkTag('parsley');
     var _ = this.sandbox.util._;
     this.sandbox.on('ship.update', function(ship) {
-      console.warn("Ship.update: ", ship);
       this.ship = ship;
       this.initState();
       this.initTimer();
       this.renderSection(this.currentSection);
     }, this);
+
     this.$el.attr('id', this.cid);
     I18n.fallbacks = true;
     I18n.locale = this.options.locale || navigator.language;
+    this.helpers.formField = _.bind(this.helpers.formField, this);
   },
 
   renderSection: function(section, data) {
@@ -227,6 +196,7 @@ Hull.component({
   // Rendering
 
   beforeRender: function(data) {
+    console.warn("--------------------------> RENDER");
     this.ship = data.ship;
     this.profileForm = $.extend(true, {}, this.ship.resources['profile-form']);
     shipConfig = this.ship.settings;
@@ -244,7 +214,11 @@ Hull.component({
         linked: loggedIn && loggedIn[provider]
       };
     });
-    data.profileFormFields = this.getFormFields();
+    data.profileFormFields = data.ship.resources['profile-form'].fields_list;
+  },
+
+  afterRender: function() {
+    this.$('form.profile-form').parsley();
   },
 
   getOption: function (key) {
@@ -396,5 +370,20 @@ Hull.component({
 
     this.$('.next-step').removeClass('disabled');
     this.selectNextQuestion();
+  },
+
+  injectLinkTag: function(file) {
+    // Helper to inject styles
+    if (this.linkTagInjected || this.options.injectLinkTag === false) { return; }
+
+    var e = document.createElement('link');
+    e.href = this.options.baseUrl + '/' + file + '.css';
+    e.rel = 'stylesheet';
+
+    document.getElementsByTagName('head')[0].appendChild(e);
+
+    this.linkTagsInjected = true;
   }
+
+
 });

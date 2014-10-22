@@ -1,0 +1,15 @@
+<span class="input-group input-append">
+
+  <input type='text' name="{{name}}" value="{{value}}"  class="form-control"
+    {{#if field_options.min}}min="{{field_options.min}}"{{/if}} 
+    {{#if field_options.max}}max="{{field_options.max}}"{{/if}} 
+    {{#if field_options.integer_only}}data-parsley-type="integer"{{/if}}
+    data-parsley-trigger="change"
+    data-parsley-errors-container="#parsley-errors-{{input_id}}"
+  /> 
+  {{#if field_options.units}}
+    <span class="add-on input-group-addon">{{field_options.units}}</span>
+  {{/if}}
+</span>
+
+<span id="parsley-errors-{{input_id}}"></span>
