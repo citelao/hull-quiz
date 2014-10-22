@@ -18,9 +18,8 @@ TODO
 - **`button_background_color`**
 - **`button_text_color`**
 
+## Developing
 
-## De
-
-- Ensure that [Node.js](http://nodejs.org), [Bower]() and [Grunt](http://gruntjs.com) are installed.
+- Ensure that [Node.js](http://nodejs.org), [Bower](http://bower.io/) and [Grunt](http://gruntjs.com) are installed.
 - Run `npm install && bower install` to ensure the required dependencies are installed.
 - Run `grunt --dev` and visit [http://0.0.0.0:8033](http://0.0.0.0:8033).
