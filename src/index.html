@@ -7,8 +7,8 @@
   <script src="{{config.init.jsUrl}}/{{config.version}}/hull.js"></script>
   <script>
     var HullConfig = {
-      orgUrl: getParameterByName('orgUrl')  || DefaultConfig.orgUrl,
-      appId: getParameterByName('appId')  || DefaultConfig.appId,
+      orgUrl: "{{config.init.orgUrl}}",
+      appId: "{{config.init.appId}}",
       debug: true,
       jsUrl: "{{config.init.jsUrl}}",
       sources: {
