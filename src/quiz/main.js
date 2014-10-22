@@ -69,12 +69,15 @@ Hull.component({
   },
 
   actions: {
-
     share: function(event, action) {
-      event && event.preventDefault()
+      event && event.preventDefault();
+
       var provider = action.data.provider;
       if (provider) {
-        Hull.share({ provider: provider, params: { href: document.location.toString() } });
+        Hull.share({
+          provider: provider,
+          params: { href: document.location.toString() }
+        });
       }
     },
 
@@ -196,7 +199,6 @@ Hull.component({
   // Rendering
 
   beforeRender: function(data) {
-    console.warn("--------------------------> RENDER");
     this.ship = data.ship;
     this.profileForm = $.extend(true, {}, this.ship.resources['profile-form']);
     shipConfig = this.ship.settings;
@@ -215,16 +217,35 @@ Hull.component({
       };
     });
     data.profileFormFields = data.ship.resources['profile-form'].fields_list;
+
+    data.state.options.text_color_alpha = this.alpha(data.state.options.text_color, 0.6);
+    data.state.options.background_color_alpha = this.alpha(data.state.options.background_color, 0);
+    data.state.options.answer_background_color = this.alpha(data.state.options.text_color, 0.05);
+    data.state.options.answer_border_color = this.alpha(data.state.options.text_color, 0.1);
+    data.state.options.answer_background_color_active = this.alpha(data.state.options.text_color, 0.1);
+    data.state.options.answer_border_color_active = this.alpha(data.state.options.text_color, 0.2);
   },
 
   afterRender: function() {
-    this.$('form.profile-form').parsley();
+    var $form = this.$('form.profile-form');
+    if ($form.length) { $form.parsley(); }
   },
 
   getOption: function (key) {
     return this.state.options[key];
   },
 
+  alpha: function(hex, alpha) {
+    var h = hex.replace('#', '');
+    h =  h.match(new RegExp('(.{' + h.length / 3 + '})', 'g'));
+
+    for(var i = 0; i < h.length; i++)
+    h[i] = parseInt(h[i].length === 1 ? h[i]+h[i] : h[i], 16);
+
+    if (typeof alpha != 'undefined') { h.push(alpha); }
+
+    return 'rgba(' + h.join(',') + ')';
+  },
 
   // Questions
 
