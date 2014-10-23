@@ -1,18 +1,20 @@
 {{> quiz/header}}
 
-<div class="experience experience-result">
-  {{#state.badge}}
-    <h1>{{t "Bravo"}}</h1>
-    <p>
-      {{score}} {{t "points"}} {{t "after"}} {{stats.attempts}} {{t "attempts"}}
-      <a href="#" data-hull-action='replay'>{{t "Replay"}}</a> or
-      complete your profile.
-    </p>
-  {{/state.badge}}
+<div class="row experience experience-result">
+  <div class="large-12">
+    {{#state.badge}}
+      <h1>{{t "Bravo"}}</h1>
+      <p>
+        {{score}} {{t "points"}} {{t "after"}} {{stats.attempts}} {{t "attempts"}}
+        <a href="#" data-hull-action='replay'>{{t "Replay"}}</a> or
+        complete your profile.
+      </p>
+    {{/state.badge}}
 
-  {{#if profileFormFields}}
-    {{> quiz/profile-form}}
-  {{/if}}
+    {{#if profileFormFields}}
+      {{> quiz/profile-form}}
+    {{/if}}
+  </div>
 </div>
 
 {{> quiz/footer}}

@@ -46,22 +46,16 @@
       font-weight: 300;
     }
 
-
-    body, html, .main {
-      height: 100%;
-      min-height: 900px;
+    .experience {
+      padding: 0 10px;
+      margin-top: 100px;
+      margin-bottom: 100px;
+      max-width: 500px;
+      -webkit-animation: fade .5s ease;
     }
 
-    .main::before {
-      display: inline-block;
-      height: 100%;
-      content: "";
-      vertical-align: middle;
-    }
-
-    .hull-component {
-      display: inline-block;
-      vertical-align: middle;
+    .experience p {
+      margin: 20px 0;
     }
 
     .main {
@@ -70,7 +64,6 @@
 
     .header,
     .footer {
-      position: absolute;
       left: 40px;
       right: 40px;
     }
@@ -99,21 +92,7 @@
       font-weight: bold;
     }
 
-    .experience {
-      -webkit-animation: fade .5s ease;
-    }
-
-    .experience h1 {
-      margin-bottom: -5px;
-    }
-
-    .experience p {
-      margin: 20px 0;
-    }
-
     .answer {
-      width: 600px;
-      display: block;
       margin-top: 10px;
       padding: 11px;
       text-decoration: none;
@@ -137,7 +116,6 @@
 
     .fields {
       display: block;
-      width: 400px;
       margin: 0 auto 20px;
       padding: 20px;
       background: #fff;
