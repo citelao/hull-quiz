@@ -1,0 +1,121 @@
+{
+  "name": "quiz",
+  "version": "0.0.1",
+  "description": "A Wonderful quiz for your users",
+  "preview_url": "http://login.ship.dev/preview.png",
+  "logo_url": "http://quiz.ship.dev/logo.png",
+  "homepage": "http://quiz.ship.dev/index.html",
+  "settings": [
+    {
+      "name": "logo_image",
+      "title": "logo image",
+      "type": "string",
+      "format": "image"
+    },
+    {
+      "name": "background_image",
+      "title": "Background image",
+      "type": "string",
+      "format": "image"
+    },
+    {
+      "name": "background_image_opacity",
+      "title": "Background image opacity",
+      "type": "string",
+      "default": ".8"
+    },
+    {
+      "name": "background_image_blur",
+      "title": "Background image blur",
+      "type": "string",
+      "default": "1"
+    },
+    {
+      "name": "background_color",
+      "title": "Background color",
+      "type": "string",
+      "format": "color",
+      "default": "#000000"
+    },
+    {
+      "name": "text_color",
+      "title": "text color",
+      "type": "string",
+      "format": "color",
+      "default": "#ffffff"
+    },
+    {
+      "name": "button_background_color",
+      "title": "Button background color",
+      "type": "string",
+      "format": "color",
+      "default": "#f39001"
+    },
+    {
+      "name": "button_text_color",
+      "title": "Button text color",
+      "type": "string",
+      "format": "color",
+      "default": "#ffffff"
+    },
+    {
+      "name": "auto_start",
+      "title": "Auto Start",
+      "description": "Automatically start the quiz when it's loaded",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "display_pagination",
+      "title": "Display pagination",
+      "description": "Display pagination buttons",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "name": "shuffle_answers",
+      "title": "Shuffle answers",
+      "description": "Shuffle the order of display for answers",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "name": "sample_questions",
+      "title": "Sample Questions",
+      "description": "Only display a number of questions picked randomly",
+      "type": "number",
+      "format": "number",
+      "default": 0
+    },
+    {
+      "name": "question_timer",
+      "title": "Question timer",
+      "description": "Maximum time to answer a question",
+      "type": "number",
+      "format": "number",
+      "default": 0
+    },
+    {
+      "name": "quiz_timer",
+      "title": "Quiz timer",
+      "description": "Maximum time to answer all questions",
+      "type": "number",
+      "format": "number",
+      "default": 0
+    }
+  ],
+  "resources": [
+    {
+      "name": "quiz",
+      "type": "quiz"
+    },
+    {
+      "name": "profile-form",
+      "type": "form"
+    }
+  ],
+  "locales": [
+    "en"
+  ],
+  "definitions": {}
+}

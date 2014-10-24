@@ -1,0 +1,152 @@
+<html>
+<head>
+  <title>Hull Quiz</title>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/css/normalize.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/css/foundation.min.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="//d3f5pyioow99x0.cloudfront.net/0.8/hull.js"></script>
+  <script>
+    var HullConfig = {
+      orgUrl: "https://{{org.domain}}",
+      appId: "{{ship.id}}",
+      sources: {
+        default: "{{ship.source_url}}"
+      }
+    };
+    Hull.init(HullConfig, function() {
+      window.addEventListener('message', function(e) {
+        var message = e.data;
+        if (message && message.event === 'ship.update') {
+          Hull.emit('ship.update', message.ship);
+        }
+      }, false);
+    });
+
+  </script>
+  <style>
+    body, button, input {
+      font: 16px/1.6 "Helvetica Neue", Helvetica, Arial, Geneva;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html, body, .main {
+      min-height: 100%;
+    }
+
+    body {
+      text-align: center;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 300;
+    }
+
+    .experience {
+      padding: 0 10px;
+      margin-top: 100px;
+      margin-bottom: 100px;
+      max-width: 500px;
+      -webkit-animation: fade .5s ease;
+    }
+
+    .experience p {
+      margin: 20px 0;
+    }
+
+    .main {
+      position: relative;
+    }
+
+    .header,
+    .footer {
+      left: 40px;
+      right: 40px;
+    }
+
+    .header {
+      top: 0;
+      padding-top: 20px;
+    }
+
+    .header .logo {
+      max-height: 100px;
+    }
+
+    .footer {
+      bottom: 0;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+
+    .footer p {
+      font-size: 0.8em;
+    }
+
+    .button {
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .progress {
+      padding: 0;
+      border: 0;
+      height: 3px;
+      margin-bottom: 20px;
+    }
+
+    .answer {
+      display: block;
+      margin-top: 10px;
+      padding: 11px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: all ease 0.2s;
+    }
+
+    .answer a {
+      text-decoration: none;
+    }
+
+    .answer h4 {
+      font-size: 16px;
+      line-height: 1;
+      font-weight: normal;
+    }
+
+    .answer p {
+      font-size: 14px;
+    }
+
+    .pagination {
+      margin-top: 20px;
+    }
+
+    .fields {
+      display: block;
+      margin: 0 auto 20px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 5px;
+      color: #aaa;
+      text-align: left;
+    }
+
+    @-webkit-keyframes fade {
+      0% { opacity:0; }
+      100% { opacity:1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <div data-hull-component="quiz"></div>
+  </div>
+</body>
+</html>
+
