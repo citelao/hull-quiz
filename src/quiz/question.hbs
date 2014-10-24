@@ -2,6 +2,12 @@
 
 <div class="row experience experience-question">
   <div class="large-12">
+    {{#if state.options.quiz_timer}}
+      <div class="progress round">
+        <span class="meter" data-hull-quiz-ticker style="width: 100%;"></span>
+      </div>
+    {{/if}}
+
     {{#question}}
       <div class="question">
         <h1>{{name}}</h1>
@@ -10,6 +16,12 @@
         {{/if}}
       </div>
     {{/question}}
+
+    {{#if state.options.question_timer}}
+      <div class="progress round">
+        <span class="meter" data-hull-question-ticker style="width: 100%;"></span>
+      </div>
+    {{/if}}
 
     <div data-hull-question="{{ref}}">
       {{#question}}
@@ -32,24 +44,18 @@
       {{/question}}
     </div>
 
-    <div class='text-center'>
-      {{#if state.options.question_timer}}
-      <span data-hull-question-ticker class='badge badge-important'>{{state.timer.countdowns.question}}</span>
-      {{/if}}
-      {{#if state.options.quiz_timer}}
-      <span data-hull-quiz-ticker class='badge badge-important'>{{state.timer.countdowns.quiz}}</span>
-      {{/if}}
-      {{#if state.options.display_pagination}}
-      <ul class="pager">
-        <li>
-          <a href="#" data-hull-action="previous" class="btn {{#unless question.pagination.previous}}disabled{{/unless}}">{{t "Previous"}}</a>
-        </li>
-        {{#if question.pagination.next}}
-        <li><a href="#" data-hull-action="next" class='btn next-step disabled'>{{t "Next"}}</a></li>
-        {{/if}}
-      </ul>
-      {{/if}}
-    </div>
+    {{#if state.options.display_pagination}}
+      <div class="pagination-centered">
+        <ul class="pagination" role="menubar" aria-label="Pagination">
+          {{#if question.pagination.previous}}
+            <li class="arrow"><a href="#" data-hull-action="previous">&laquo; {{t "Previous"}}</a></li>
+          {{/if}}
+          {{#if question.pagination.next}}
+            <li class="arrow"><a href="#" data-hull-action="next">{{t "Next"}} &raquo;</a></li>
+          {{/if}}
+        </ul>
+      </div>
+    {{/if}}
   </div>
 </div>
 

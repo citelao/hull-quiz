@@ -60,4 +60,22 @@ h1, h2, h3, h4, h5, h6, a:hover, a:active {
   box-shadow: 0 0 10px {{state.options.answer_border_color_active}};
 }
 
+ul.pagination li a {
+  color: {{state.options.text_color}};
+  text-decoration: none;
+}
+
+ul.pagination li:hover a {
+  color: {{state.options.button_text_color}};
+  background-color: {{state.options.button_background_color}}
+}
+
+.progress {
+  background: {{state.options.answer_background_color}};
+}
+
+.progress .meter {
+  background-color: {{state.options.button_background_color}}
+}
+
 </style>

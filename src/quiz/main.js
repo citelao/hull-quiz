@@ -341,7 +341,7 @@ Hull.component({
     if (this.getOption('question_timer')) {
       if (timer.countdowns.question > 0) {
         timer.countdowns.question -= 1;
-        this.onQuestionTick(timer.countdowns.question);
+        this.onQuestionTick(timer.countdowns.question, this.getOption('question_timer'));
       } else if (timer.countdowns.question === 0) {
         this.selectNextQuestion();
       }
@@ -349,18 +349,22 @@ Hull.component({
   },
 
   resetQuestionCountdown: function() {
-    if (this.getOption('question_timer')) {
-      this.state.timer.countdowns.question = this.getOption('question_timer');
-      this.onQuestionTick(this.getOption('question_timer'));
+    var t = this.getOption('question_timer');
+
+    if (t) {
+      this.state.timer.countdowns.question = t;
+      this.onQuestionTick(t, t);
     }
   },
 
   onQuestionTick: function(remaining, total) {
-    this.$find('[data-hull-question-ticker]').html(remaining);
+    var p = (remaining / total) * 100;
+    this.$find('[data-hull-question-ticker]').css({ width: p + '%' });
   },
 
   onQuizTick: function(remaining, total) {
-    this.$find('[data-hull-quiz-ticker]').html(remaining);
+    var p = (remaining / total) * 100;
+    this.$find('[data-hull-quiz-ticker]').css({ width: p + '%' });
   },
 
   // Navigation
@@ -405,6 +409,4 @@ Hull.component({
 
     this.linkTagsInjected = true;
   }
-
-
 });
