@@ -9,7 +9,7 @@
     "grunt": "~0.4.5",
     "grunt-contrib-watch": "0.5.3",
     "grunt-contrib-connect": "0.7.1",
-    "grunt-hull-components": "hull/grunt-hull-components#73ed56d5bb3af4152acc6102c21835415c00f4e4",
+    "grunt-hull-components": "hull/grunt-hull-components#f251867b8cc10d957a26b2c998e08e54820d12bf",
     "grunt-gh-pages": "0.9.1"
   }
 }
