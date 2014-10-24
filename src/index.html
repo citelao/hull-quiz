@@ -1,21 +1,18 @@
 <html>
 <head>
-  <title>Hull Components - {{options.sourceName}} - version: {{options.version}}</title>
+  <title>Hull Quiz</title>
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/css/normalize.css">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/css/foundation.min.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="{{config.init.jsUrl}}/{{config.version}}/hull.js"></script>
+  <script src="//d3f5pyioow99x0.cloudfront.net/0.8/hull.js"></script>
   <script>
     var HullConfig = {
-      orgUrl: "{{config.init.orgUrl}}",
-      appId: "{{config.init.appId}}",
-      debug: true,
-      jsUrl: "{{config.init.jsUrl}}",
+      orgUrl: "https://{{org.domain}}",
+      appId: "{{ship.id}}",
       sources: {
-        default: document.location.origin
+        default: "{{ship.source_url}}"
       }
     };
-
     Hull.init(HullConfig, function() {
       window.addEventListener('message', function(e) {
         var message = e.data;
