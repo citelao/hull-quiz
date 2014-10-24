@@ -31,14 +31,12 @@
 
         <div class="answers">
         {{#answers}}
-          <div class="answer">
-            <a href="#" data-hull-action="answer" data-hull-answer-ref="{{ref}}" data-hull-question-ref="{{../ref}}">
-              <h4>{{name}}</h4>
-              {{#if description}}
-                <p>{{description}}</p>
-              {{/if}}
-            </a>
-          </div>
+          <a href="#" data-hull-action="answer" class="answer" data-hull-answer-ref="{{ref}}" data-hull-question-ref="{{../ref}}">
+            <h4>{{name}}</h4>
+            {{#if description}}
+              <p>{{description}}</p>
+            {{/if}}
+          </a>
         {{/answers}}
         </div>
       {{/question}}
