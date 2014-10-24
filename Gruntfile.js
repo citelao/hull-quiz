@@ -48,5 +48,5 @@ module.exports = function(grunt) {
   });
   grunt.registerTask('build', ['hull_components']);
   grunt.registerTask('default', ['connect:server', 'hull_components', 'watch']);
-  grunt.registerTask('dist', ['hull_components', 'gh-pages']);
+  grunt.registerTask('deploy', ['hull_components', 'gh-pages']);
 };
