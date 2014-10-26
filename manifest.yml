@@ -1,6 +1,7 @@
 name: "quiz"
 version: "0.0.1"
 description: "A Wonderful quiz for your users"
+index: "index.liquid.html"
 settings:
   - name: "logo_image"
     title: "logo image"
