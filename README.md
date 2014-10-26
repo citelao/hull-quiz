@@ -5,8 +5,6 @@ Simple quizz ship made with Hull component.
 
 ## Installing
 
-TODO
-
 ## Options
 
 - **`logo image`**
@@ -23,3 +21,18 @@ TODO
 - Ensure that [Node.js](http://nodejs.org), [Bower](http://bower.io/) and [Grunt](http://gruntjs.com) are installed.
 - Run `npm install && bower install` to ensure the required dependencies are installed.
 - Run `grunt --dev` and visit [http://0.0.0.0:8033](http://0.0.0.0:8033).
+
+Your manifest file and assets must be publicly available to install your ship.
+When developing locally the easiest way is to share your 'dist' folder on Dropbox or to use [ngrok](https://ngrok.com).
+
+
+## Deploying
+
+## To Github Pages
+
+To deploy to github pages, just run `grunt deploy`.
+
+## Anywhere else
+
+Run `grunt build` and upload the `dist` folder to your web server.
+
