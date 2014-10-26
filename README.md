@@ -3,7 +3,9 @@ Quizz Ship
 
 Simple quizz ship made with Hull component.
 
-## Installing
+## Manifest URL
+
+    https://hull-ships.github.io/quiz/manifest.json
 
 ## Options
 
