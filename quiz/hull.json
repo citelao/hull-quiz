@@ -1,6 +1,6 @@
 {
   "name": "quiz",
-  "version": "d19832d59ba0e08576c45c81e4dbcdc28aab1b5e",
+  "version": "55aacfb3012dd05010bbbab157bb679d0c86afe8",
   "files": {
     "templates": [
       "fields/checkboxes.hbs",
@@ -30,7 +30,7 @@
       "parsley.js"
     ]
   },
-  "buildDate": "2014-10-24T16:42:19.100Z",
+  "buildDate": "2014-10-26T15:19:27.084Z",
   "translations": [
     "Bravo",
     "Login and play with",

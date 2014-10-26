@@ -2,9 +2,7 @@
   "name": "quiz",
   "version": "0.0.1",
   "description": "A Wonderful quiz for your users",
-  "preview_url": "http://login.ship.dev/preview.png",
-  "logo_url": "http://quiz.ship.dev/logo.png",
-  "homepage": "http://quiz.ship.dev/index.html",
+  "index": "index.liquid.html",
   "settings": [
     {
       "name": "logo_image",
