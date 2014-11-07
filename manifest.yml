@@ -75,7 +75,7 @@ settings:
 resources:
   - name: "quiz"
     type: "quiz"
-  - name: "profile-form"
+  - name: "form"
     type: "form"
 locales:
   - en
