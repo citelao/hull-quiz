@@ -48,12 +48,12 @@ settings:
     title: "Display pagination"
     description: "Display pagination buttons"
     type: "boolean"
-    default: true
+    default: false
   - name: "shuffle_answers"
     title: "Shuffle answers"
     description: "Shuffle the order of display for answers"
     type: "boolean"
-    default: true
+    default: false
   - name: "sample_questions"
     title: "Sample Questions"
     description: "Only display a number of questions picked randomly"
