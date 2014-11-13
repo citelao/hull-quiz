@@ -4,21 +4,21 @@
   <meta charset="UTF-8">
   <title>Quiz Ship</title>
 
-  <link rel="stylesheet" href="{{ship.source_url}}assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/app.css">
 
   <script src="//d3f5pyioow99x0.cloudfront.net/0.8/hull.api.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-sanitize.min.js"></script>
-  <script src="{{ship.source_url}}assets/js/app.js"></script>
-  <script src="{{ship.source_url}}assets/js/templates.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/templates.js"></script>
   <script>
     Hull.init({
-      appId: "{{ship.id}}",
-      orgUrl: "http://{{org.domain}}"
+      appId: "5460a7f55cc017fc6d000073",
+      orgUrl: "http://super.hullapp.dev"
     });
   </script>
 </head>
-{% raw %}
+
   <body ng-cloak ng-controller="QuizController">
     <div ng-include="'style.html'"></div>
 
@@ -38,6 +38,6 @@
       </footer>
     </div>
   </body>
-{% endraw %}
+
 </html>
 

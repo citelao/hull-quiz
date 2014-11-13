@@ -1,1 +1,0 @@
-../../bower_components/parsleyjs/dist/parsley.js

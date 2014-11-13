@@ -1,0 +1,13 @@
+<h1 class="step-name">{{translate('introduction_title')}}</h1>
+<p class="step-description">{{translate('introduction_subtitle')}}</p>
+
+<button ng-if="state.user" ng-click="play()" class="button">{{translate('play_button')}}</button>
+
+<div ng-if="!state.user">
+  <div ng-if="state.isLogingIn">{{translate('loging_in_message')}}</div>
+
+  <div ng-if="!state.isLogingIn" ng-repeat="service in authenticationServices">
+    <button ng-click="play(service)" class="button">{{translate('play_with_service_button', { service: service })}}</button>
+  </div>
+</div>
+
