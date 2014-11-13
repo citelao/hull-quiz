@@ -1,11 +1,24 @@
-Instant Ship
-==========
+Quiz Ship
+=========
 
-Simple InstantWin ship made with AngularJS, Gulp and SASS.
+Simple quizz ship made with Hull component.
 
 ## Manifest URL
 
-    https://hull-ships.github.io/instant/manifest.json
+```
+https://hull-ships.github.io/quiz/manifest.json
+```
+
+## Options
+
+- **`logo image`**
+- **`background image`**
+- **`background image opacity`**
+- **`background image blur`**
+- **`background_color`**
+- **`text_color`**
+- **`button_background_color`**
+- **`button_text_color`**
 
 ## Developing
 
