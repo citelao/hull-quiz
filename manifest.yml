@@ -13,12 +13,20 @@ settings:
     format: "image"
   - name: "background_image_opacity"
     title: "Background image opacity"
-    type: "string"
-    default: ".8"
+    type: "number"
+    format: "range"
+    default: 0.8
+    maximum: 1
+    munimum: 0
+    multipleOf: 0.1
   - name: "background_image_blur"
     title: "Background image blur"
-    type: "string"
-    default: "1"
+    type: "number"
+    format: "range"
+    default: 0.1
+    maximum: 10
+    minimum: 0
+    multipleOf: 0.1
   - name: "background_color"
     title: "Background color"
     type: "string"
