@@ -17,7 +17,7 @@ settings:
     format: "range"
     default: 0.8
     maximum: 1
-    munimum: 0
+    minimum: 0
     multipleOf: 0.1
   - name: "background_image_blur"
     title: "Background image blur"
