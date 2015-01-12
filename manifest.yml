@@ -2,6 +2,7 @@ name: "quiz"
 version: "0.0.1"
 description: "A Wonderful quiz for your users"
 index: "index.liquid.html"
+fullpage: true
 settings:
   - name: "logo_image"
     title: "logo image"
