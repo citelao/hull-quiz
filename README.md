@@ -1,7 +1,7 @@
 Quizz Ship
 ==========
 
-Simple quizz ship made with Aura components.
+Simple quizz ship made with Hull/Aura,js components.
 
 ## Manifest URL
 
