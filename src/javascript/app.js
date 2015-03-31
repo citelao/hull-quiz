@@ -29,6 +29,10 @@ function getAuthenticationServices() {
 
 var app = angular.module('hull-quiz', ['schemaForm'])
 
+.config(['$sceProvider', function($sceProvider) {
+  $sceProvider.enabled(false);
+}])
+
 .controller('QuizController', ['$scope', '$engine', function($scope, $engine) {
   $scope.authenticationServices = getAuthenticationServices();
 
