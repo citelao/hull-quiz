@@ -89,12 +89,11 @@ var app = angular.module('hull-quiz', ['schemaForm'])
   };
 })
 
-Hull.ready(function(_, user, ship) {
-  var e = new Engine(user, ship);
+Hull.onEmbed(document, function(element, deployment) {
+  debugger;
+  var e = new Engine(Hull.currentUser(), deployment.ship);
   app.value('$engine', e);
 
-  window.ENGINE = e;
-
-  angular.bootstrap(document, ['hull-quiz']);
+  angular.bootstrap(element, ['hull-quiz']);
 });
 
