@@ -9,31 +9,14 @@ var Constants = {
   THANKS_STEP: 'thanks_step'
 };
 
-var MessageFormat = require('messageformat');
-var mf = new MessageFormat('en');
-
-// TODO Move this to en.json
-var T = {
-  "loader_message": "Loading...",
-  "footer_message": "By playing, you agree to {privacy_policy} and {terms_of_service}",
-  "introduction_title": "Let's Play",
-  "introduction_subtitle": "Play the quiz",
-  "play_button": "Play",
-  "play_with_service_button": "Play with {service}",
-  "loging_in_message": "Waiting for login to complete...",
-  "result_title": "Bravo",
-  "result_subtitle": "Score {score} after {attempts, plural, one{one attempt} other{# attemps}}.",
-  "replay": "Replay",
-  "or_complete_your_profile": "or complete your profile.",
-  "save_profile_button": "Save profile",
-  "thanks_title": "Thanks for playing!",
-  "thanks_subtitle": "Thanks subtitle"
-};
-
 function Engine(user, ship) {
   this._setInitialState(user, ship);
 
-  Hull.on('hull.auth.logout', this.reset.bind(this));
+  Hull.on('hull.user.update', function() {
+    // handle log out this way for now, because "hull.user.logout" event is
+    // not triggered consistently.
+    if (this._user != null && Hull.currentUser() == null) { this.reset(); }
+  }.bind(this));
 
   window.addEventListener('message', function(e) {
     var message = e.data;
@@ -47,7 +30,6 @@ function Engine(user, ship) {
 
 Engine.prototype = {
   getState: function() {
-    console.log(this._badge);
     return {
       ship: this._ship,
       user: this._user,
