@@ -1,7 +1,7 @@
-<h1 class="step-name">{{translate('result_title')}}</h1>
+<h1 class="step-name">{{translate('Result')}}</h1>
 <div class="step-description">
-  <p>{{translate('result_subtitle', { score: 4, attempts: 1 })}}</p>
-  <p><a ng-click="reset()" href="#">{{translate('replay')}}</a> {{translate('or_complete_your_profile')}}</p>
+  <p>{{translate('Score {score} after {attempts, plural, one{one attempt} other{# attemps} }.', { score: state.badge.score, attempts: state.badge.stats.attempts })}}</p>
+  <p><a ng-click="reset()" href="#">{{translate('Replay')}}</a> {{translate('or complete your profile.')}}</p>
 </div>
 
 <form name="shipForm" sf-schema="state.form.fields_schema" sf-form="form" sf-model="formData" ng-submit="submitForm(shipForm)"></form>

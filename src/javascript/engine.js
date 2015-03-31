@@ -32,7 +32,6 @@ var T = {
 
 function Engine(user, ship) {
   this._setInitialState(user, ship);
-  this._compileTranslations();
 
   Hull.on('hull.auth.logout', this.reset.bind(this));
 
@@ -41,27 +40,14 @@ function Engine(user, ship) {
     if (message && message.event === 'ship.update') {
       this._settings = message.ship.settings;
 
-      this._translations = message.ship.translations;
-      this._compileTranslations();
-
       this._emitChange();
     }
   }.bind(this), false);
 }
 
 Engine.prototype = {
-  _compileTranslations: function() {
-    this._compiledTranslations = _.reduce(T, function(m, v, k) {
-      m[k] = mf.compile(v);
-      return m;
-    }, {}, this);
-  },
-
-  _getTranslations: function() {
-    this._compiledTranslations['result']
-  },
-
   getState: function() {
+    console.log(this._badge);
     return {
       ship: this._ship,
       user: this._user,
@@ -171,11 +157,6 @@ Engine.prototype = {
     });
   },
 
-  translate: function(key, data) {
-    var t = this._compiledTranslations[key]
-    return t ? t(data || {}) : 'Missing translation ' + key;
-  },
-
   _setInitialState: function(user, ship) {
     this._ship = ship;
     this._user = user;
@@ -183,7 +164,6 @@ Engine.prototype = {
     this._form = this._ship.resources.form;
     this._badge = this._user && this._ship.resources.quiz.badg;
     this._settings = ship.settings;
-    this._translations = ship.translations;
     this._questions = this._getQuestions();
     this._countdown = (this._settings.quiz_countdown > 0) && this._settings.quiz_countdown;
     this._currentQuestionIndex = 0;

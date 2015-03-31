@@ -17,7 +17,7 @@
 
     <div class="ship">
       <div ng-if="state.isLoading" class="loader">
-        <p class="loader-message">{{translate('loader_message')}}</p>
+        <p class="loader-message">{{translate('Loading...')}}</p>
       </div>
 
       <header class="header">
@@ -27,7 +27,7 @@
       <div ng-include="state.currentStep + '.html'" class="step"></div>
 
       <footer class="footer">
-        <p>{{translate('footer_message')}}</p>
+      <p>{{translate('By playing, you agree to our privacy policy and our terms of service')}}</p>
       </footer>
     </div>
   <div>

@@ -1,10 +1,5 @@
 var _ = require('underscore');
-
-function getAuthenticationServices() {
-  return Object.keys(Hull.config('services').auth || {}).filter(function(s) {
-    return s !== 'hull';
-  });
-}
+var i18n = require('./i18n');
 
 var Engine = require('./engine');
 
@@ -20,10 +15,17 @@ try {
     };
   });
 } catch(e) {}
+
 require('angular-schema-form/dist/schema-form');
 require('./schema-form/foundation-decorator');
 require('./schema-form/foundation-decorator-datepicker');
 require('angular-datepicker/build/angular-datepicker');
+
+function getAuthenticationServices() {
+  return Object.keys(Hull.config('services').auth || {}).filter(function(s) {
+    return s !== 'hull';
+  });
+}
 
 var app = angular.module('hull-quiz', ['schemaForm'])
 
@@ -42,9 +44,10 @@ var app = angular.module('hull-quiz', ['schemaForm'])
   $scope.selectAnswer = $engine.selectAnswer.bind($engine);
   $scope.finishQuiz = $engine.finishQuiz.bind($engine);
   $scope.reset = $engine.reset.bind($engine);
-  $scope.translate = $engine.translate.bind($engine);
 
-  $scope.form = [ '*', { type: 'submit', title: $engine.translate('save_profile_button') } ];
+  $scope.translate = i18n.translate;
+
+  $scope.form = [ '*', { type: 'submit', title: i18n.translate('Save profile') } ];
   $scope.formData = _.reduce($scope.state.form.fields_list, function(m, field) {
     m[field.name] = field.value;
     return m;
@@ -92,6 +95,8 @@ var app = angular.module('hull-quiz', ['schemaForm'])
 Hull.onEmbed(document, function(element, deployment) {
   var e = new Engine(Hull.currentUser(), deployment.ship);
   app.value('$engine', e);
+
+  i18n.setTranslations(deployment.ship.translations);
 
   angular.bootstrap(element, ['hull-quiz']);
 });
