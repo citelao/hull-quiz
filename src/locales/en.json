@@ -1,0 +1,16 @@
+{
+  "Answer the questions correctly!": "Answer the questions correctly!",
+  "By playing, you agree to our privacy policy and our terms of service": "By playing, you agree to our privacy policy and our terms of service",
+  "Come back later to see the result!": "Come back later to see the result!",
+  "Let's play!": "Let's play!",
+  "Loading...": "Loading...",
+  "Play": "Play",
+  "Play with {service}": "Play with {service}",
+  "Replay": "Replay",
+  "Result": "Result",
+  "Score {score} after {attempts, plural, one{one attempt} other{# attemps} }.": "Score {score} after {attempts, plural, one{one attempt} other{# attemps} }.",
+  "Thanks for playing!": "Thanks for playing!",
+  "or complete your profile.": "or complete your profile.",
+  "Waiting for log in to complete...": "Waiting for log in to complete..."
+}
+

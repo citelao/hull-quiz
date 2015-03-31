@@ -1,8 +1,9 @@
-.DS_Store
-.grunt
-tmp
-node_modules
-bower_components
-config.json
 dist
-config.yml
+tmp
+.DS_Store
+bower_components
+node_modules
+.env
+env.yml
+npm-debug.log
+
