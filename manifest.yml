@@ -1,6 +1,6 @@
-name: "quiz"
+name: "Classic Quiz"
 version: "0.0.1"
-description: "A Wonderful quiz for your users"
+description: "A Quiz game with scores"
 index: "index.html"
 fullpage: true
 picture: 'picture.png'

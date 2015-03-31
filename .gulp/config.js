@@ -21,8 +21,8 @@ module.exports = {
     dest: dest + "/assets/css/"
   },
   images: {
-    src: src + "/images/**",
-    dest: dest + "/assets/images"
+    src: src + "/*.png",
+    dest: dest + "/"
   },
   locales: {
     src: src + "/locales/*.json",
