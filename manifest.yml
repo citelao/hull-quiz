@@ -3,6 +3,7 @@ version: "0.0.1"
 description: "A Wonderful quiz for your users"
 index: "index.html"
 fullpage: true
+picture: 'picture.png'
 settings:
   - name: "logo_image"
     title: "logo image"
