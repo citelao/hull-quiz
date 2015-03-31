@@ -90,7 +90,6 @@ var app = angular.module('hull-quiz', ['schemaForm'])
 })
 
 Hull.onEmbed(document, function(element, deployment) {
-  debugger;
   var e = new Engine(Hull.currentUser(), deployment.ship);
   app.value('$engine', e);
 
