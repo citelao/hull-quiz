@@ -1,6 +1,6 @@
 var gulp = require('gulp');
-var config = require('../config').markup;
+var config = require('../config').locales;
 
-gulp.task('markup', function() {
+gulp.task('locales', function() {
   return gulp.src(config.src).pipe(gulp.dest(config.dest));
 });

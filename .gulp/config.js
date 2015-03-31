@@ -24,6 +24,10 @@ module.exports = {
     src: src + "/images/**",
     dest: dest + "/assets/images"
   },
+  locales: {
+    src: src + "/locales/*.json",
+    dest: dest + "/locales"
+  },
   markup: {
     src: src + "/*.html",
     dest: dest
@@ -37,10 +41,6 @@ module.exports = {
       src: src + "/templates/hull-quiz/**/*.html",
       module: 'hull-quiz'
     }
-  },
-  translate: {
-    src: src + '/**/*.html',
-    dest: dest + '/locales'
   },
   browserify: {
     // Enable source maps
