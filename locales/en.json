@@ -1,16 +1,16 @@
 {
-  "Bravo": "Bravo",
-  "Login and play with": "Login and play with",
-  "Next": "Next",
-  "Previous": "Previous",
+  "Answer the questions correctly!": "Answer the questions correctly!",
+  "By playing, you agree to our privacy policy and our terms of service": "By playing, you agree to our privacy policy and our terms of service",
+  "Come back later to see the result!": "Come back later to see the result!",
+  "Let's play!": "Let's play!",
+  "Loading...": "Loading...",
+  "Play": "Play",
+  "Play with {service}": "Play with {service}",
   "Replay": "Replay",
-  "Save my profile": "Save my profile",
-  "Start": "Start",
-  "after": "after",
-  "attempts": "attempts",
-  "intro_description": "intro_description",
-  "intro_title": "intro_title",
-  "points": "points",
-  "thanks_descriptions": "thanks_descriptions",
-  "thanks_title": "thanks_title"
+  "Result": "Result",
+  "Score {score} after {attempts, plural, one{one attempt} other{# attemps} }.": "Score {score} after {attempts, plural, one{one attempt} other{# attemps} }.",
+  "Thanks for playing!": "Thanks for playing!",
+  "or complete your profile.": "or complete your profile.",
+  "Waiting for log in to complete...": "Waiting for log in to complete..."
 }
+
