@@ -2,8 +2,7 @@ name: "Classic Quiz"
 version: "0.0.1"
 description: "A Quiz game with scores"
 index: "ship.html"
-fullpage: true
-picture: 'picture.png'
+picture: "picture.png"
 settings:
   - name: "logo_image"
     title: "logo image"
