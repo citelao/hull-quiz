@@ -21,7 +21,7 @@
       </div>
 
       <header class="header">
-        <img ng-if="state.settings.logo_image" ng-src="state.settings.logo_image" class="logo" alt="">
+        <img ng-if="state.settings.logo_image" ng-src="{{state.settings.logo_image}}" class="logo" alt="">
       </header>
 
       <div ng-include="state.currentStep + '.html'" class="step"></div>
