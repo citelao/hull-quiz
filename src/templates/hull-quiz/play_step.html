@@ -1,16 +1,16 @@
 <countdown ng-if="state.countdown" max="state.settings.quiz_countdown" value="state.countdown"></countdown>
 
-<h1 class="step-name">{{state.currentQuestion.name}}</h1>
-<p ng-if="state.currentQuestion.description" class="step-description">{{state.currentQuestion.description}}</p>
+<h1 class="step-name" ng-bind-html="state.currentQuestion.name"></h1>
+<p ng-if="state.currentQuestion.description" class="step-description" ng-bind-html="state.currentQuestion.description"></p>
 
 <countdown ng-if="state.currentQuestion.countdown" max="state.settings.question_countdown" value="state.currentQuestion.countdown"></countdown>
 
-<img ng-if="state.currentQuestion.picture" ng-src="state.currentQuestion.picture" />
+<img class="question-image" ng-if="state.currentQuestion.picture" ng-src="{{state.currentQuestion.picture}}" />
 
 <div ng-repeat="answer in state.currentQuestion.answers" class="answers">
   <a ng-click="selectAnswer(state.currentQuestion, answer)" class="answer">
-    <h2 class="answer-name">{{answer.name}}</h2>
-    <p ng-if="answer.description" class="answer-description">{{answer.description}}</p>
+    <h2 class="answer-name" ng-bind-html="answer.name"></h2>
+    <p ng-if="answer.description" class="answer-description" ng-bind-html="answer.description"></p>
   </a>
 </div>
 

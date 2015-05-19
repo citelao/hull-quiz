@@ -49,16 +49,15 @@ gulp.task('browserify', function(callback) {
         // stream gulp compatible. Specifiy the
         // desired output filename here.
         .pipe(source(bundleConfig.outputName))
-        .pipe(gulp.dest(bundleConfig.dest))
-        // .pipe(rename({ suffix: '.min' }))
-        // .pipe(buffer())
-        // .pipe(uglify())
         // .pipe(gulp.dest(bundleConfig.dest))
+        // .pipe(rename({ suffix: '.min' }))
+        .pipe(buffer())
+        .pipe(uglify())
+        .pipe(gulp.dest(bundleConfig.dest))
         .on('end', reportFinished);
     };
 
     if (global.isWatching) {
-      console.warn('Bif mustache is watching...');
       // Wrap with watchify and rebundle on changes
       bundler = watchify(bundler);
       // Rebundle on update

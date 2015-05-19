@@ -1,6 +1,5 @@
 <style>
-  body {
-    color: {{state.settings.text_color}};
+  .ship-container {
     color: {{state.settings.text_color | opacity:0.6}};
     background-color: {{state.settings.background_color}};
   }
@@ -20,6 +19,7 @@
 
   .ship {
     background: linear-gradient(to bottom, {{state.settings.background_color | opacity:0}} 60%, {{state.settings.background_color}} 100%);
+    z-index: 2;
   }
 
   .ship::after {
@@ -39,6 +39,16 @@
     -o-filter: blur({{state.settings.background_image_blur}}px);
     -ms-filter: blur({{state.settings.background_image_blur}}px);
     filter: blur({{state.settings.background_image_blur}}px);
+  }
+
+
+  .header .logo {
+    max-height: {{state.settings.logo_max_height}}px;
+  }
+
+  img.question-image {
+    max-width: 100%;
+    max-height: {{state.settings.questions_images_max_height}}px;
   }
 
   .answer {

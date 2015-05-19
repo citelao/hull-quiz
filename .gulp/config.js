@@ -6,7 +6,11 @@ module.exports = {
     server: {
       // We're serving the src folder as well
       // for sass sourcemap linking
-      baseDir: [dest, src]
+      baseDir: [dest, src],
+      middleware: function(req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        next();
+      }
     },
     files: [
       dest + "/**",
@@ -44,7 +48,7 @@ module.exports = {
   },
   browserify: {
     // Enable source maps
-    debug: true,
+    debug: false,
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{

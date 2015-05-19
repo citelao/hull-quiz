@@ -36,10 +36,22 @@ var app = angular.module('hull-quiz', ['schemaForm'])
 .controller('QuizController', ['$scope', '$engine', function($scope, $engine) {
   $scope.authenticationServices = getAuthenticationServices();
 
+  function getFormData(form) {
+    var fields_list = (form && form.fields_list) || [];
+    return _.reduce(fields_list, function(m, field) {
+      m[field.name] = field.value;
+      return m;
+    }, {});
+  }
+
+
   $scope.state = $engine.getState();
+  $scope.formData = getFormData($scope.state.form);
+
   $engine.addChangeListener(function(state) {
     $scope.$apply(function() {
       $scope.state = state;
+      $scope.formData = getFormData(state.form);
     });
   });
 
@@ -47,15 +59,11 @@ var app = angular.module('hull-quiz', ['schemaForm'])
   $scope.selectQuestion = $engine.selectQuestion.bind($engine);
   $scope.selectAnswer = $engine.selectAnswer.bind($engine);
   $scope.finishQuiz = $engine.finishQuiz.bind($engine);
-  $scope.reset = $engine.reset.bind($engine);
+  $scope.reset = $engine.reset.bind($engine, { replay: true });
 
   $scope.translate = i18n.translate;
 
   $scope.form = [ '*', { type: 'submit', title: i18n.translate('Save profile') } ];
-  $scope.formData = _.reduce($scope.state.form.fields_list, function(m, field) {
-    m[field.name] = field.value;
-    return m;
-  }, {});
 
   $scope.submitForm = function(form) {
     $scope.$broadcast('schemaFormValidate');

@@ -34,6 +34,7 @@
     "gulp-concat": "^2.4.1",
     "gulp-copy": "0.0.2",
     "gulp-imagemin": "^1.2.1",
+    "gulp-inline-style": "^0.1.1",
     "gulp-liquid": "^0.1.0",
     "gulp-minify-html": "^0.1.6",
     "gulp-notify": "^2.0.0",
