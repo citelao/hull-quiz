@@ -3,6 +3,8 @@ var config = require('../config').markup;
 var Critical = require('critical');
 var through2 = require('through2');
 var _ = require('underscore');
+var PluginError = require('gulp-util').PluginError;
+
 
  function critical(opts) {
     opts = opts || {};
