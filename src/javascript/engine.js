@@ -22,7 +22,6 @@ function Engine(user, ship) {
     var message = e.data;
     if (message && message.event === 'ship.update') {
       this._settings = message.ship.settings;
-
       this._emitChange();
     }
   }.bind(this), false);
@@ -57,14 +56,9 @@ Engine.prototype = {
     } else if (provider) {
       this._emitChange({ isLogingIn: true });
       var self = this;
-      var shipId = this._ship.id;
-      Hull.login(provider).then(function() {
-        var user = Hull.currentUser();
-        Hull.api(shipId).then(function(ship) {
-          self._setInitialState(user, ship);
+      Hull.login(provider).then(function(user) {
+        self.reset().then(function(ship) {
           self._startQuiz();
-        }, function(error) {
-          self._emitChange({ error: error });
         });
       }, function(error) {
         self._emitChange({ error: error })
@@ -133,14 +127,17 @@ Engine.prototype = {
     Hull.on(CHANGE_EVENT, c);
   },
 
-  reset: function() {
+  reset: function(opts) {
+    var options = opts || { replay: false };
     this._emitChange({ isLoading: 'reset' });
-
-    Hull.api(this._ship.id).then(function(ship) {
-      this._setInitialState(Hull.currentUser(), ship, true);
-      this._emitChange();
-    }.bind(this), function(error) {
-      // TODO handle API errors.
+    var self = this, user = Hull.currentUser();
+    return Hull.api(this._ship.id).then(function(ship) {
+      self._setInitialState(user, ship, options.replay);
+      self._emitChange();
+      return ship;
+    }, function(error) {
+      self._emitChange({ error: error });
+      return error;
     });
   },
 

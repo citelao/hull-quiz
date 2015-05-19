@@ -37,7 +37,8 @@ var app = angular.module('hull-quiz', ['schemaForm'])
   $scope.authenticationServices = getAuthenticationServices();
 
   function getFormData(form) {
-    return _.reduce(form.fields_list, function(m, field) {
+    var fields_list = (form && form.fields_list) || [];
+    return _.reduce(fields_list, function(m, field) {
       m[field.name] = field.value;
       return m;
     }, {});
@@ -58,7 +59,7 @@ var app = angular.module('hull-quiz', ['schemaForm'])
   $scope.selectQuestion = $engine.selectQuestion.bind($engine);
   $scope.selectAnswer = $engine.selectAnswer.bind($engine);
   $scope.finishQuiz = $engine.finishQuiz.bind($engine);
-  $scope.reset = $engine.reset.bind($engine);
+  $scope.reset = $engine.reset.bind($engine, { replay: true });
 
   $scope.translate = i18n.translate;
 
