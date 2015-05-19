@@ -5,7 +5,7 @@
 
 <countdown ng-if="state.currentQuestion.countdown" max="state.settings.question_countdown" value="state.currentQuestion.countdown"></countdown>
 
-<img ng-if="state.currentQuestion.picture" ng-src="{{state.currentQuestion.picture}}" />
+<img class="question-image" ng-if="state.currentQuestion.picture" ng-src="{{state.currentQuestion.picture}}" />
 
 <div ng-repeat="answer in state.currentQuestion.answers" class="answers">
   <a ng-click="selectAnswer(state.currentQuestion, answer)" class="answer">

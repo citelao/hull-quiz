@@ -27,7 +27,9 @@
   padding: 16px 20px;
   transition: background-color 200ms ease-out;
   border-radius: 4px;
+  margin: 0 10px 10px 0;
 }
+
 
 .button-block {
   display: block;
@@ -90,6 +92,11 @@
 
 .answer-description {
   font-size: 14px;
+}
+
+
+img.question-image {
+  width: 100%;
 }
 
 .loader {
