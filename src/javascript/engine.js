@@ -56,13 +56,13 @@ Engine.prototype = {
       this._startQuiz();
     } else if (provider) {
       this._emitChange({ isLogingIn: true });
-
+      var self = this;
       Hull.login(provider).then(function() {
-        this._user = Hull.currentUser();
-        this._startQuiz();
-      }.bind(this), function(error) {
-        this._emitChange({ error: error })
-      }.bind(this));
+        self._user = Hull.currentUser();
+        self._startQuiz();
+      }, function(error) {
+        self._emitChange({ error: error })
+      })
     } else {
       throw 'provider is missing...';
     }
@@ -131,20 +131,20 @@ Engine.prototype = {
     this._emitChange({ isLoading: 'reset' });
 
     Hull.api(this._ship.id).then(function(ship) {
-      this._setInitialState(Hull.currentUser(), ship);
-
+      this._setInitialState(Hull.currentUser(), ship, true);
       this._emitChange();
     }.bind(this), function(error) {
       // TODO handle API errors.
     });
   },
 
-  _setInitialState: function(user, ship) {
+  _setInitialState: function(user, ship, canReplay) {
     this._ship = ship;
     this._user = user;
     this._quiz = this._ship.resources.quiz;
     this._form = this._ship.resources.form;
-    this._badge = this._user && this._ship.resources.quiz.badg;
+
+    this._badge = this._user && this._quiz.badge;
     this._settings = ship.settings;
     this._questions = this._getQuestions();
     this._countdown = (this._settings.quiz_countdown > 0) && this._settings.quiz_countdown;
@@ -152,9 +152,20 @@ Engine.prototype = {
     this._answers = {};
     this._quizIsStarted = false;
     this._quizStartedAt = null;
-    this._quizIsFinished = false;
-    this._quizFinishedAt = null;
-    this._formIsSubmited = false;
+
+    var canUserReplay = canReplay || ship.settings.can_replay;
+
+    if (canUserReplay) {
+      this._quizIsStarted = false;
+      this._quizIsFinished = false;
+      this._quizFinishedAt = null;
+      this._formIsSubmited = false;
+    } else {
+      this._quizIsStarted = !!this._badge;
+      this._quizIsFinished = !!this._badge;
+      this._quizFinishedAt = this._badge && this._badge.updated_at;
+      this._formIsSubmited = this._form && this._form.user_data && this._form.user_data.updated_at;
+    }
   },
 
   _startQuiz: function() {

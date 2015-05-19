@@ -58,7 +58,6 @@ gulp.task('browserify', function(callback) {
     };
 
     if (global.isWatching) {
-      console.warn('Bif mustache is watching...');
       // Wrap with watchify and rebundle on changes
       bundler = watchify(bundler);
       // Rebundle on update

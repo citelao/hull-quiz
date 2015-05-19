@@ -53,6 +53,10 @@ settings:
     description: "Display pagination buttons"
     type: "boolean"
     default: false
+  - name: "can_replay"
+    title: "User can replay"
+    type: "boolean"
+    default: false
   - name: "sample_questions"
     title: "Sample Questions"
     description: "Only display a number of questions picked randomly"
