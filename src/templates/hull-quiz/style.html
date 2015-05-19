@@ -1,6 +1,5 @@
 <style>
-  .ship {
-    color: {{state.settings.text_color}};
+  .ship-container {
     color: {{state.settings.text_color | opacity:0.6}};
     background-color: {{state.settings.background_color}};
   }
@@ -20,6 +19,7 @@
 
   .ship {
     background: linear-gradient(to bottom, {{state.settings.background_color | opacity:0}} 60%, {{state.settings.background_color}} 100%);
+    z-index: 2;
   }
 
   .ship::after {
