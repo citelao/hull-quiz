@@ -216,7 +216,6 @@ Engine.prototype = {
     if (src && /http/.test(src)) {
       this._preloadedImages = this._preloadedImages || {};
       if (!this._preloadedImages[src]) {
-        console.warn('Preloading picture ', src);
         var img = document.createElement('img');
         img.src = src;
         this._preloadedImages[src] = true
