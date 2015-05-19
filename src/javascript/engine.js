@@ -57,9 +57,15 @@ Engine.prototype = {
     } else if (provider) {
       this._emitChange({ isLogingIn: true });
       var self = this;
+      var shipId = this._ship.id;
       Hull.login(provider).then(function() {
-        self._user = Hull.currentUser();
-        self._startQuiz();
+        var user = Hull.currentUser();
+        Hull.api(shipId).then(function(ship) {
+          self._setInitialState(user, ship);
+          self._startQuiz();
+        }, function(error) {
+          self._emitChange({ error: error });
+        });
       }, function(error) {
         self._emitChange({ error: error })
       })
@@ -206,6 +212,18 @@ Engine.prototype = {
     }
   },
 
+  _preloadImage: function(src) {
+    if (src && /http/.test(src)) {
+      this._preloadedImages = this._preloadedImages || {};
+      if (!this._preloadedImages[src]) {
+        console.warn('Preloading picture ', src);
+        var img = document.createElement('img');
+        img.src = src;
+        this._preloadedImages[src] = true
+      }
+    }
+  },
+
   _getQuestions: function() {
     var questions = this._ship.resources.quiz.questions;
     if (this._settings.sample_questions > 0) {
@@ -213,10 +231,14 @@ Engine.prototype = {
     }
 
     return _.map(questions, function(q) {
+      this._preloadImage(q.picture)
       var answers = q.answers;
       if (this._settings.sample_answers > 0) {
         answers = _.sample(q.answers, this._settings.sample_answers);
       }
+      _.map(answers, function(a) {
+        this._preloadImage(a.picture);
+      }, this);
       q.answers = answers;
       q.countdown = (this._settings.question_countdown > 0) && this._settings.question_countdown;
 
