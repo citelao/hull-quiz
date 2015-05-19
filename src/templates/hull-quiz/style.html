@@ -41,6 +41,16 @@
     filter: blur({{state.settings.background_image_blur}}px);
   }
 
+
+  .header .logo {
+    max-height: {{state.settings.logo_max_height}}px;
+  }
+
+  img.question-image {
+    max-width: 100%;
+    max-height: {{state.settings.questions_images_max_height}}px;
+  }
+
   .answer {
     background-color: {{state.settings.text_color | opacity:0.05}};
     border: 1px solid {{state.settings.text_color | opacity:0.1}};

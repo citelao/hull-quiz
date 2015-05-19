@@ -8,6 +8,12 @@ settings:
     title: "logo image"
     type: "string"
     format: "image"
+  - name: "logo_max_height"
+    title: "Max height for logo"
+    description: "Maximum height for your logo"
+    type: "number"
+    format: "number"
+    default: 150
   - name: "background_image"
     title: "Background image"
     type: "string"
@@ -53,6 +59,12 @@ settings:
     description: "Display pagination buttons"
     type: "boolean"
     default: false
+  - name: "questions_images_max_height"
+    title: "Max height for question images"
+    description: "Maximum height for your questions images (in pixels)"
+    type: "number"
+    format: "number"
+    default: 500
   - name: "can_replay"
     title: "User can replay"
     type: "boolean"

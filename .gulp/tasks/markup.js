@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var config = require('../config').markup;
-var _ = require('underscore');
 var inlineStyle = require('gulp-inline-style');
 
 gulp.task('markup', ['sass'], function() {
