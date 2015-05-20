@@ -1,13 +1,15 @@
-<h1 class="step-name">{{translate("Let's play!")}}</h1>
-<p class="step-description">{{translate('Answer the questions correctly!')}}</p>
+<h1 class="step-name" ng-bind-html="translate('Let\'s play!')"></h1>
+<p class="step-description" ng-bind-html="translate('Answer the questions correctly!')"></p>
 
 <button ng-if="state.user" ng-click="play()" class="button-block button">{{translate('Play')}}</button>
 
 <div ng-if="!state.user">
-  <div ng-if="state.isLogingIn">{{translate('Waiting for log in to complete...')}}</div>
+  <div ng-if="state.isLogingIn" ng-bind-html="translate('Waiting for log in to complete...')"></div>
 
-  <div ng-if="!state.isLogingIn" ng-repeat="service in authenticationServices">
-    <button ng-click="play(service)" class="button-block button">{{translate('Play with {service}', { service: service })}}</button>
+  <div ng-if="!state.isLogingIn" ng-repeat="service in state.authServices">
+    <button ng-click="play(service.name)" class="button-block button">
+      {{translate('Play with {service}', { service: service.displayName })}}
+    </button>
   </div>
 </div>
 

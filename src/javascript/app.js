@@ -21,12 +21,6 @@ require('./schema-form/foundation-decorator');
 require('./schema-form/foundation-decorator-datepicker');
 require('angular-datepicker/build/angular-datepicker');
 
-function getAuthenticationServices() {
-  return Object.keys(Hull.config('services').auth || {}).filter(function(s) {
-    return s !== 'hull';
-  });
-}
-
 var app = angular.module('hull-quiz', ['schemaForm'])
 
 .config(['$sceProvider', function($sceProvider) {
@@ -34,7 +28,6 @@ var app = angular.module('hull-quiz', ['schemaForm'])
 }])
 
 .controller('QuizController', ['$scope', '$engine', function($scope, $engine) {
-  $scope.authenticationServices = getAuthenticationServices();
 
   function getFormData(form) {
     var fields_list = (form && form.fields_list) || [];

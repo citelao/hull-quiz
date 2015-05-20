@@ -9,6 +9,13 @@ var Constants = {
   THANKS_STEP: 'thanks_step'
 };
 
+
+function camelize(str) {
+  return str.replace (/(?:^|[-_])(\w)/g, function (_, c) {
+    return c ? c.toUpperCase () : '';
+  })
+}
+
 function Engine(user, ship) {
   this._setInitialState(user, ship);
 
@@ -46,7 +53,8 @@ Engine.prototype = {
       answers: this._answers,
       quizIsStarted: this._quizIsStarted,
       quizisFinished: this._quizIsFinished,
-      formIsSubmited: this._formIsSubmited
+      formIsSubmited: this._formIsSubmited,
+      authServices: this._getAuthServices()
     };
   },
 
@@ -138,6 +146,14 @@ Engine.prototype = {
     }, function(error) {
       self._emitChange({ error: error });
       return error;
+    });
+  },
+
+  _getAuthServices: function() {
+    return _.map(Object.keys(Hull.config('services').auth || {}).filter(function(s) {
+      return s !== 'hull';
+    }), function(s) {
+      return { name: s, displayName: camelize(s) };
     });
   },
 

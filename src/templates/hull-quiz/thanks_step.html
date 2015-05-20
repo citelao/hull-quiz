@@ -1,8 +1,8 @@
-<h1 class="step-name">{{translate('Thanks for playing!')}}</h1>
+<h1 class="step-name" ng-bind-html="translate('Thanks for playing!')"></h1>
 
 <div class="step-description">
-  <p>{{translate('Score {score} after {attempts, plural, one{one attempt} other{# attemps} }.', { score: state.badge.score, attempts: state.badge.stats.attempts })}}</p>
+  <p ng-bind-html="translate('Score {score} after {attempts, plural, one{one attempt} other{# attemps} }.', { score: state.badge.score, attempts: state.badge.stats.attempts })"></p>
   <p ng-if="state.settings.can_replay"><a ng-click="reset()" href="#">{{translate('Replay')}}</a></p>
 </div>
 
-<p class="step-description">{{translate('Come back later to see the result!')}}</p>
+<p class="step-description" ng-bind-html="translate('Come back later to see the result!')"></p>
