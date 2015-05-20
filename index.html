@@ -4,75 +4,28 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script id="hull-js-sdk" platform-id="551aaa4d6230cff34a000007" org-url="https://hull-demos.hullapp.io" src="https://hull-js.s3.amazonaws.com/7c6f0eb357a1ea48b57da5bf09df41d86244642f/hull.js"></script>
   <!--
-  <script id="hull-js-sdk" src="https://hull-js.s3.amazonaws.com/5d3eaac78e88311943e828482f73629e847ecb90/hull.js" debug="true" platform-id="555a019d15b21181a4000d10" org-url="https://universalpictures.hullapp.io" embed="false"></script>
--->
-  <script id="hull-js-sdk" src="https://hull-js.s3.amazonaws.com/5d3eaac78e88311943e828482f73629e847ecb90/hull.js" debug="true" platform-id="547c721906321c02c3000005" org-url="https://49a337f6.hullbeta.io" embed="false"></script>
-
+    This page will start the ship directly, skipping html embeds.
+    It will use the keys from manifest.json.
+    That's usually what you need to display a demo and develop locally.
+  -->
   <style>
-  #container {
-    width: 760px;
-    margin: auto;
-  }
+    body{
+      color: #3f4547;
+      font-family: "Helvetica Neue", arial, sans-serif;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      background-color: white;
+    }
+    h1{
+      font-weight: 200;
+      color:#303030;
+      margin-bottom: 24px;
+    }
   </style>
-
-
-  <script>
-
-    (function() {
-      var shipContainer;
-
-      function EmbedShip(hull, user, ship, organization) {
-        // Special, undocumented, unsupported case : we boot on a ship and fake a platform.
-        var importEl = document.querySelector('[data-hull-embed="' + ship.homepage_url + '"]');
-        if (importEl) importEl.remove();
-
-        if (shipContainer) shipContainer.remove();
-        shipContainer = document.createElement('div');
-        shipContainer.setAttribute('id', '___embedded_ship___');
-
-        var container = document.querySelector('#container')
-        container.innerHTML = '';
-        container.appendChild(shipContainer);
-
-        ship.source_url = document.location.origin;
-        ship.index = ship.source_url + '/ship.html';
-
-        Hull.embed([{
-          id: 'customize',
-          ship: ship,
-          platform: ship,
-          organization: organization,
-          settings: {
-            _sandbox: false,
-            _selector: '#___embedded_ship___',
-            _placement: 'replace',
-            _multi: false
-          }
-        }]);
-      };
-
-      Hull.ready(EmbedShip);
-
-      window.addEventListener('message', function(e) {
-        var message = e.data;
-        if (window.Hull && message && message.event === 'ship.update') {
-          Hull.ready(function(hull, user, platform, organization) {
-            EmbedShip(hull, user, message.ship, organization);
-          });
-        }
-      });
-    })();
-
-
-  </script>
-
-  
 </head>
 <body>
-  <div id="container">
-    <div id="___embedded_ship___"></div>
-  </div>
-
+  <div class="main" id="ship"></div>
 </body>
 </html>
