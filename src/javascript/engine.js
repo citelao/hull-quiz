@@ -150,12 +150,14 @@ Engine.prototype = {
   },
 
   _getAuthServices: function() {
-    return { name: 'facebook', displayName: 'Facebook' };
-    return _.map(Object.keys(Hull.config('services').auth || {}).filter(function(s) {
-      return s !== 'hull';
-    }), function(s) {
-      return { name: s, displayName: camelize(s) };
-    });
+    return [
+      { name: 'facebook', displayName: 'Facebook' }
+    ];
+    // return _.map(Object.keys(Hull.config('services').auth || {}).filter(function(s) {
+    //   return s !== 'hull';
+    // }), function(s) {
+    //   return { name: s, displayName: camelize(s) };
+    // });
   },
 
   _setInitialState: function(user, ship, canReplay) {
