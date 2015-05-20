@@ -19,7 +19,7 @@
     >{{form.description}}</span>
     <span
       class='label-text-error'
-      ng-if="(hasError() && errorMessage(schemaError()))"
+      ng-if="(false && hasError() && errorMessage(schemaError()))"
       ng-class="evalInScope(form.feedback) || {'valid': hasSuccess(), 'error': hasError() }"
       ng-bind-html="(hasError() && errorMessage(schemaError()))"
     >
