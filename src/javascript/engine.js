@@ -150,6 +150,7 @@ Engine.prototype = {
   },
 
   _getAuthServices: function() {
+    return { name: 'facebook', displayName: 'Facebook' };
     return _.map(Object.keys(Hull.config('services').auth || {}).filter(function(s) {
       return s !== 'hull';
     }), function(s) {
