@@ -3,7 +3,7 @@
   <p ng-bind-html="translate('Score {score} after {attempts, plural, one{one attempt} other{# attemps} }.', { score: state.badge.score, attempts: state.badge.stats.attempts })"></p>
   <p>
     <a ng-if="state.settings.can_replay" ng-click="reset()" href="#">{{translate('Replay')}}</a>
-    <span ng-bind-html="translate('or complete your profile.')"</span>
+    <span ng-bind-html="translate('or complete your profile.')"></span>
   </p>
 </div>
 
