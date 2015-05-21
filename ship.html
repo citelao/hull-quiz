@@ -279,7 +279,7 @@ label.error {
     <div ng-include="state.currentStep + '.html'" class="step"></div>
 
     <footer class="footer">
-      <p>{{translate('By playing, you agree to our privacy policy and our terms of service')}}</p>
+      <p ng-bind-html="translate('By playing, you agree to our privacy policy and our terms of service')"></p>
     </footer>
 
   </div>
