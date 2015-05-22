@@ -26,6 +26,21 @@
   border-radius: 4px;
   margin: 0 10px 10px 0; }
 
+.button.button-facebook {
+  background-color: #3c5a98; }
+  .button.button-facebook:hover {
+    background-color: #3c5a98; }
+
+.button.button-twitter {
+  background-color: #00abf5; }
+  .button.button-twitter:hover {
+    background-color: #00abf5; }
+
+.button.button-google {
+  background-color: #eb2f12; }
+  .button.button-google:hover {
+    background-color: #eb2f12; }
+
 .button-block {
   display: block;
   width: 100%; }
