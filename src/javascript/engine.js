@@ -247,7 +247,7 @@ Engine.prototype = {
   _getCurrentStep: function() {
     if (!this._user || !this._quizIsStarted) {
       return Constants.INTRODUCTION_STEP;
-    } else if (this._formIsSubmited) {
+    } else if (this._badge && this._formIsSubmited) {
       return Constants.THANKS_STEP;
     } else if (this._quizIsFinished) {
       return Constants.RESULT_STEP;
