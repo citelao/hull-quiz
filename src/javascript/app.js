@@ -106,6 +106,6 @@ Hull.onEmbed(document, function(element, deployment) {
   i18n.setTranslations(deployment.ship.translations);
 
   angular.bootstrap(element, ['hull-quiz']);
-  Hull.autoSize();
+  Hull.autoSize && Hull.autoSize();
 });
 
