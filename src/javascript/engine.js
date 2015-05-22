@@ -244,17 +244,16 @@ Engine.prototype = {
     Hull.emit(CHANGE_EVENT, state);
   },
 
+
   _getCurrentStep: function() {
     if (!this._user || !this._quizIsStarted) {
       return Constants.INTRODUCTION_STEP;
-    } else if (!this._quizIsStarted && this._formIsSubmited) {
-      return Constants.THANKS_STEP;
-    } else if (this._quizIsFinished) {
-      return Constants.RESULT_STEP;
     } else if (this._quizIsStarted && !this._quizIsFinished) {
       return Constants.PLAY_STEP;
+    } else if (this._quizIsFinished && !this._formIsSubmited) {
+      return Constants.RESULT_STEP;
     } else {
-      throw 'This is not supposed to happen...';
+      return Constants.THANKS_STEP;
     }
   },
 
