@@ -16,7 +16,10 @@ function camelize(str) {
   })
 }
 
-function Engine(user, ship) {
+function Engine(user, deployment) {
+  var ship = deployment.ship;
+  this._platform = deployment.platform;
+
   this._setInitialState(user, ship);
 
   Hull.on('hull.user.update', function() {
@@ -54,7 +57,8 @@ Engine.prototype = {
       quizIsStarted: this._quizIsStarted,
       quizisFinished: this._quizIsFinished,
       formIsSubmited: this._formIsSubmited,
-      authServices: this._getAuthServices()
+      authServices: this._getAuthServices(),
+      shareServices: this._getShareServices()
     };
   },
 
@@ -147,6 +151,32 @@ Engine.prototype = {
       self._emitChange({ error: error });
       return error;
     });
+  },
+
+  share: function(provider) {
+    var sharingSettings = this._settings.sharing;
+    var shareParams = {};
+    if (sharingSettings) {
+      var providerOptions = _.omit(this._settings.sharing[provider] || {}, 'display', 'button_text');
+      providerOptions.display = 'popup';
+      var shareParams = _.extend({
+        url: this._settings.sharing.url
+      }, providerOptions);
+    }
+    Hull.share({ provider: provider, params: shareParams });
+  },
+
+  _getShareServices: function() {
+    if (this._settings.sharing && this._settings.sharing.url) {
+      return _.compact(_.map(this._settings.sharing, function(s,k) {
+        if (s && s.display) {
+          var displayName = s.button_text || camelize(k);
+          return { name: k, displayName: displayName };
+        }
+      }));
+    } else {
+      return [];
+    }
   },
 
   _getAuthServices: function() {

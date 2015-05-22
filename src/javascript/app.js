@@ -53,6 +53,7 @@ var app = angular.module('hull-quiz', ['schemaForm'])
   $scope.selectAnswer = $engine.selectAnswer.bind($engine);
   $scope.finishQuiz = $engine.finishQuiz.bind($engine);
   $scope.reset = $engine.reset.bind($engine, { replay: true });
+  $scope.share = $engine.share.bind($engine);
 
   $scope.translate = i18n.translate;
 
@@ -65,6 +66,7 @@ var app = angular.module('hull-quiz', ['schemaForm'])
       $engine.submitForm($scope.formData);
     }
   };
+
 }])
 
 .directive('countdown', function() {
@@ -98,11 +100,12 @@ var app = angular.module('hull-quiz', ['schemaForm'])
 })
 
 Hull.onEmbed(document, function(element, deployment) {
-  var e = new Engine(Hull.currentUser(), deployment.ship);
+  var e = new Engine(Hull.currentUser(), deployment);
   app.value('$engine', e);
 
   i18n.setTranslations(deployment.ship.translations);
 
   angular.bootstrap(element, ['hull-quiz']);
+  Hull.autoSize();
 });
 

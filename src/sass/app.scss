@@ -31,6 +31,33 @@
 }
 
 
+$facebook_color : #3c5a98;
+$google_color   : #eb2f12;
+$twitter_color  : #00abf5;
+
+
+
+.button.button-facebook {
+  background-color: $facebook_color;
+  &:hover {
+    background-color: $facebook_color;
+  }
+}
+
+.button.button-twitter {
+  background-color: $twitter_color;
+  &:hover {
+    background-color: $twitter_color;
+  }
+}
+
+.button.button-google {
+  background-color: $google_color;
+  &:hover {
+    background-color: $google_color;
+  }
+}
+
 .button-block {
   display: block;
   width: 100%;

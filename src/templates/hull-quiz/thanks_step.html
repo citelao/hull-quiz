@@ -6,3 +6,10 @@
 </div>
 
 <p class="step-description" ng-bind-html="translate('Come back later to see the result!')"></p>
+
+<p class="step-description" >
+  <div ng-repeat="service in state.shareServices">
+    <a ng-click="share(service.name)" class="button-block button" ng-class="'button-' + service.name" ng-bind-html="service.displayName">
+    </a>
+  </div>
+</p>
